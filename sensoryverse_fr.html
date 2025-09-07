@@ -6,6 +6,26 @@
   <title>Bienvenue dans SensoryVerse</title>
   <link rel="icon" href="SensoryVerse.png" />
   <style>
+  
+  /* Botón compacto reutilizando el estilo base .button */
+.button--sm{
+  padding: 0.45rem 0.75rem;
+  font-size: .9rem;
+  border-radius: 10px;
+}
+
+/* Quita subrayado y mantiene alineación del switcher */
+.language-switcher a{
+  text-decoration: none;   /* sin underline */
+}
+
+/* (Opcional) resalta el idioma activo */
+.language-switcher .lang-btn[aria-current="page"]{
+  filter: brightness(0.9);
+  box-shadow: 0 0 0 2px #fff inset;
+  cursor: default;
+}
+  
     :root{
       --cyan:#00f2ff;
       --bg1:#111;
@@ -116,11 +136,11 @@
 <body>
 
   <!-- Language Switcher -->
-  <div class="language-switcher">
-    <a href="sensoryverse.html" class="lang-btn">🇪🇸 ES</a>
-    <a href="sensoryverse_en.html" class="lang-btn">🇬🇧 EN</a>
-    <a href="sensoryverse_fr.html" class="lang-btn">🇫🇷 FR</a>
-  </div>
+<div class="language-switcher" role="navigation" aria-label="Selector de idioma">
+  <a href="sensoryverse.html" class="button button--sm lang-btn">🇪🇸 ES</a>
+  <a href="sensoryverse_en.html" class="button button--sm lang-btn">🇬🇧 EN</a>
+  <a href="sensoryverse_fr.html" class="button button--sm lang-btn" aria-current="page">🇫🇷 FR</a>
+</div>
 
 
   <div class="container">
