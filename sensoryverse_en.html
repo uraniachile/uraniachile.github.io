@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to SensoryVerse</title>
+  <link rel="icon" href="SensoryVerse.png" />
+  <style>
+    :root{
+      --cyan:#00f2ff;
+      --bg1:#111;
+      --bg2:#000;
+      --card:#1e1e2f;
+      --muted:#ccc;
+      --muted2:#888;
+      --shadow:#00f2ff33;
+    }
+    html,body{scroll-behavior:smooth}
+    body {
+      font-family: sans-serif;
+      background: radial-gradient(var(--bg1), var(--bg2));
+      color: #eee;
+      margin: 0;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .container { max-width: 980px; margin: auto; }
+
+    .logo { width: 120px; margin-bottom: 1.2rem; }
+
+    h1 { color: var(--cyan); font-size: 2.2rem; margin: .2rem 0 1rem; }
+    h2 { color: var(--cyan); margin: 2.2rem 0 1rem; }
+    h3 { color: #e8ffff; margin: 1.2rem 0 .6rem; }
+
+    p { font-size: 1.05rem; color: var(--muted); margin: .75rem 0; line-height: 1.6; }
+
+    .intro {
+      background: var(--card);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 0 15px var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+    
+    
+    /* Language Switcher */
+    .language-switcher {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: .5rem;
+    }    
+    
+
+    .button-group {
+      margin-top: 1.2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    a.button {
+      background: var(--cyan);
+      color: #000;
+      padding: 0.8rem 1.2rem;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 10px var(--shadow);
+    }
+    a.button:hover { background: #00c2cc; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (min-width: 840px){
+      .two-col { grid-template-columns: 1fr 1fr; }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 1rem;
+      padding: 1.2rem 1.3rem;
+      text-align: left;
+      box-shadow: 0 0 15px var(--shadow);
+    }
+
+    ul, ol { text-align: left; color: var(--muted); line-height: 1.6; }
+    li + li { margin-top: .35rem; }
+
+    .pill {
+      display:inline-block; padding:.2rem .6rem; border-radius:999px;
+      background:#26304a; color:#cfefff; font-size:.85rem; margin:.15rem .25rem 0 0;
+      border:1px solid #3b4e79;
+    }
+
+    .divider {
+      margin: 2.2rem auto;
+      border: none;
+      border-top: 1px solid #444;
+      width: min(980px, 92vw);
+    }
+
+    footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted2); }
+
+    .small { font-size:.95rem; color:#b9cfd6; }
+    .note { font-size:.95rem; color:#b9cfd6; background:#151526; padding:.75rem 1rem; border-radius:.75rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Language Switcher -->
+  <div class="language-switcher">
+    <a href="index.html" class="lang-btn">🇬🇧 EN</a>
+    <a href="index_es.html" class="lang-btn">🇪🇸 ES</a>
+    <a href="index_fr.html" class="lang-btn">🇫🇷 FR</a>
+  </div>
+
+
+  <div class="container">
+    <img src="SensoryVerse.png" alt="SensoryVerse logo" class="logo" />
+    <h1>Welcome to SensoryVerse</h1>
+
+    <section class="intro">
+<p><strong>SensoryVerse</strong> is a cognitive playground — designed to help you uncover how your mind perceives, focuses, and learns most effectively.</p>
+<p>Created by a team of astrophysicists, neuroscientists, entrepreneurs, videogame designers, and AI experts, it blends science and creativity: begin with a short quiz to chart your cognitive “constellation,” then explore mini-games — or enjoy focus songs inspired by the SensoryVerse archetypes - that reveal your patterns of attention, memory, flexibility, and sensory balance.</p>
+      <div class="button-group">
+        <a href="quiz.html" class="button" target="_blank">🧠 Take the Quiz</a>
+        <a href="juegos.html" class="button" target="_blank">🎮 Try the Games</a>
+         <a href="canciones.html" class="button" target="_blank">🎵 Archetype Songs</a>
+        <a href="#science" class="button">🔬 The Science</a>
+      </div>
+    </section>
+
+<section id="science">
+  <h2>🔬 The Science Behind SensoryVerse</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>From “learning styles” to measurable traits</h3>
+      <p>
+        For decades, the idea of fixed “learning styles” (visual, auditory, kinesthetic, etc.) has been popular in education. 
+        However, large-scale research shows that teaching students strictly according to a declared style does not reliably 
+        improve learning outcomes. What does matter are measurable cognitive traits that influence how people process, 
+        remember, and apply information.
+      </p>
+      <p>
+        SensoryVerse focuses on these traits — such as attention rhythm, preference for rich vs. minimal sensory input, 
+        balance between analytical and associative thinking, and the role of emotion in learning. These factors are supported 
+        by evidence from cognitive psychology, neuroscience, and human–computer interaction.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>
+        Instead of asking learners to adapt to a fixed environment, adaptive systems can adjust the environment to the learner. 
+        This is especially relevant for neurodivergent learners, where differences in attention, sensory processing, or social pacing 
+        can become strengths when the context is tuned appropriately.
+      </p>
+      <ul>
+        <li><strong>Instructional design</strong>: tailoring representations (visual, verbal, embodied) and pacing to match cognitive needs.</li>
+        <li><strong>Focus tools</strong>: using music, rhythm, or rituals to support concentration and reduce distraction.</li>
+        <li><strong>Assessment</strong>: tracking how people adapt under cognitive load, rather than only testing recall.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>How SensoryVerse gathers insight</h3>
+      <p>
+        Insights are derived in two complementary ways:
+      </p>
+      <ol>
+        <li><strong>Questionnaires</strong> — structured self-report questions that reveal preferences in attention, processing, and engagement.</li>
+        <li><strong>Micro-games</strong> — short, browser-based tasks that measure behavior such as reaction time, switching ability, memory 
+            for words vs. images, and tolerance for overstimulation.</li>
+      </ol>
+      <p>
+        Comparing these two signals increases accuracy: when self-perception and measured behavior agree, we gain confidence; 
+        when they diverge, it highlights areas for reflection or training.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Research directions</h3>
+      <p>
+        SensoryVerse is part of a growing effort to connect cognitive science with practical, inclusive learning design. Planned studies include:
+      </p>
+      <ul>
+        <li>Evaluating the reliability of short tasks as measures of attention, flexibility, and sensory load.</li>
+        <li>Testing whether adapting content and environment based on these traits improves engagement and retention.</li>
+        <li>Sharing anonymized data and open methods to support reproducibility and collaboration.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Ethics and privacy</h3>
+      <ul>
+        <li><strong>Minimal data</strong>: only collect what is needed to generate feedback and improve design.</li>
+        <li><strong>Local first</strong>: whenever possible, analysis happens in your browser; exporting data is optional.</li>
+        <li><strong>De-identified</strong>: no personal identifiers are linked to performance data.</li>
+        <li><strong>Consent</strong>: participation in research is separate from using the tool for personal insight.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem;">📚 References</h3>
+  <ul>
+    <li>Pashler, H., McDaniel, M., Rohrer, D., & Bjork, R. (2008). 
+      <a href="https://journals.sagepub.com/doi/10.1111/j.1539-6053.2009.01038.x" target="_blank">
+        Learning styles: Concepts and evidence
+      </a>. <em>Psychological Science in the Public Interest</em>, 9(3), 105–119.</li>
+    <li>Kirschner, P. A. (2017). 
+      <a href="https://doi.org/10.1007/s10648-017-9400-6" target="_blank">
+        Stop propagating the learning styles myth
+      </a>. <em>Educational Psychologist</em>, 52(2), 135–146.</li>
+    <li>Schneider, W., & Chein, J. M. (2003). 
+      <a href="https://doi.org/10.3758/BF03195988" target="_blank">
+        Controlled & automatic processing: Behavior, theory, and biological mechanisms
+      </a>. <em>Cognitive Science</em>, 27(3), 525–559.</li>
+    <li>D'Mello, S. K., & Graesser, A. C. (2012). 
+      <a href="https://doi.org/10.1016/j.cedpsych.2012.03.003" target="_blank">
+        Dynamics of affective states during complex learning
+      </a>. <em>Contemporary Educational Psychology</em>, 37(2), 145–153.</li>
+    <li>Koedinger, K. R., Corbett, A. T., & Perfetti, C. (2012). 
+      <a href="https://doi.org/10.1007/s10648-012-9196-3" target="_blank">
+        The knowledge-learning-instruction framework
+      </a>. <em>Educational Psychologist</em>, 47(2), 78–108.</li>
+  </ul>
+</section>
+
+    <hr class="divider" />
+
+    <section>
+	<h2>Get Started</h2>
+	<p>
+	  Begin with the quick quiz to map your cognitive constellation.  
+	  Then explore mini-games that challenge attention, memory, and flexibility —  
+	  and dive into focus songs inspired by the SensoryVerse archetypes.  
+	  Your feedback directly shapes the next iteration.
+	</p>
+	<div class="button-group">
+	  <a href="quiz_en.html" class="button" target="_blank">🧠 Take the Quiz</a>
+	  <a href="juegos.html" class="button" target="_blank">🎮 Try the Games</a>
+	  <a href="canciones.html" class="button" target="_blank">🎵 Explore the Songs</a>
+	</div>
+
+      </div>
+      <p class="small" style="margin-top:1rem;">
+        Questions or collaboration ideas? <a href="mailto:cosmovis1216@gmail.com" style="color: var(--cyan);">cosmovis1216@gmail.com</a> —
+        Follow along on <a href="https://www.youtube.com/@SensoryVerse" target="_blank" style="color: var(--cyan);">YouTube</a>      </p>
+    </section>
+  </div>
+    <footer>
+ <center><a href="index.html" target="_blank"><img src="urania_logo.png" alt="Logo Urania" width="50"></a><center>
+      Created by Urania — © 2025 All rights reserved.
+	</footer>
+
+</body>
+</html>

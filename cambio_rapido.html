@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cambio Rápido – Juego de Flexibilidad Cognitiva</title>
+  <link rel="icon" type="image/png" href="SensoryVerse.png" />
+  <style>
+    body{
+      font-family:sans-serif;background:#111;color:#eee;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      min-height:100vh;margin:0;
+    }
+    h1{ margin-bottom:.5rem }
+    #game,#summary{ display:none; text-align:center }
+    .options{
+      display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin:1rem;
+    }
+    .option{
+      width:100px;height:100px;display:flex;align-items:center;justify-content:center;
+      border-radius:10px;font-size:4.2rem;cursor:pointer;line-height:1;
+    }
+    /* símbolo centrado visualmente un pelín más abajo */
+    .sym{ display:inline-block; line-height:1; transform: translateY(-2px); }
+    button{
+      background:#00f2ff;border:none;padding:.75rem 1.25rem;border-radius:5px;cursor:pointer;
+      font-size:1rem;margin:.5rem;
+    }
+    button:hover{ background:#00c2cc }
+    pre.ascii{
+      text-align:left;font-family:monospace;font-size:.9rem;line-height:1.05rem;white-space:pre;
+      display:inline-block;margin:0 auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔄 Cambio Rápido</h1>
+  <p>Elige la opción correcta según la regla actual. ¡La regla cambiará aleatoriamente!</p>
+
+  <div id="game">
+    <h2 id="ruleText"></h2>
+    <div class="options" id="optionsContainer"></div>
+    <button onclick="stopGame()">Detener juego</button>
+  </div>
+
+  <div id="summary"></div>
+  <button onclick="startGame()">Iniciar juego</button>
+
+  <script>
+    /* Formas: reemplazamos el cuadrado "■" por hexágono "⬢" */
+    const FORMAS = ["●","▲","⬢","◆"];
+    const COLORES_FONDO = ["red","green","blue","purple"];
+    const COLORES_SIMBOLO = ["black","yellow","cyan","brown"];
+
+    let reglas = [], reglaActual;
+    let rondasRegla = 0, cambiarDespues = 5;
+    let totalRondas = 0, aciertos = 0;
+    let inicioTiempo = 0, juegoActivo = false;
+
+    // Cada clic: { tAbs, reaccionMs, desdeReglaMs, correcto }
+    const reacciones = [];
+
+    // Marca del instante en que APARECE la regla en pantalla
+    let ruleStartAbs = null;
+    // Bandera: acabamos de cambiar de regla y la siguiente ronda es la 1
+    let nuevaReglaPendiente = false;
+
+    function generarReglas(){
+      const f1 = FORMAS[Math.floor(Math.random()*FORMAS.length)];
+      const f2 = FORMAS[Math.floor(Math.random()*FORMAS.length)];
+      const fondo = COLORES_FONDO[Math.floor(Math.random()*COLORES_FONDO.length)];
+      const colorForma = COLORES_SIMBOLO[Math.floor(Math.random()*COLORES_SIMBOLO.length)];
+      return [
+        { tipo:"forma",      valor:f1,         texto:"Elige la forma:",              condicion:(o)=>o.forma===f1 },
+        { tipo:"fondo",      valor:fondo,      texto:"Elige el color de fondo:",     condicion:(o)=>o.fondo===fondo },
+        { tipo:"colorForma", valor:colorForma, texto:"Elige el color de la forma:",  condicion:(o)=>o.color===colorForma },
+        { tipo:"forma",      valor:f2,         texto:"Elige la forma:",              condicion:(o)=>o.forma===f2 },
+      ];
+    }
+
+    function startGame(){
+      reglas = generarReglas();
+      reglaActual = reglas[Math.floor(Math.random()*reglas.length)];
+      rondasRegla = 0;
+      totalRondas = 0;
+      aciertos = 0;
+      reacciones.length = 0;
+      ruleStartAbs = null;
+      nuevaReglaPendiente = true;
+      juegoActivo = true;
+
+      document.getElementById("summary").style.display = "none";
+      document.getElementById("game").style.display = "block";
+      mostrarNuevaRonda();
+    }
+
+    function stopGame(){
+      juegoActivo = false;
+      document.getElementById("game").style.display = "none";
+
+      // Puntos del gráfico:
+      // X = segundos desde que APARECIÓ la regla (se puso ruleStartAbs) hasta el clic actual
+      // Y = intervalo entre clics consecutivos (ms). Para el primer clic, usamos reaccionMs.
+      const puntos = [];
+      for (let i = 0; i < reacciones.length; i++){
+        const r = reacciones[i];
+        const prev = i > 0 ? reacciones[i-1] : null;
+        const x = (r.desdeReglaMs) / 1000;                // segundos
+        const y = prev ? (r.tAbs - prev.tAbs) : r.reaccionMs; // ms
+        puntos.push({ x, y, error: !r.correcto });
+      }
+
+      // ======= Gráfico ASCII =======
+      const COLS = 60, ROWS = 16;
+      const xMin = 0;
+      const xMaxData = puntos.length ? Math.max(...puntos.map(p=>p.x)) : 1;
+      const xMax = Math.max(1, Math.ceil(xMaxData));         // enteros (s)
+      const yMin = 0;
+      const yMaxData = puntos.length ? Math.max(...puntos.map(p=>p.y)) : 600;
+      const yMax = Math.max(600, Math.ceil(yMaxData/200)*200); // múltiplo 200 ms
+
+      const mapX = v => Math.round((v - xMin)/(xMax - xMin || 1)*(COLS-1));
+      const mapY = v => ROWS - 1 - Math.round((v - yMin)/(yMax - yMin || 1)*(ROWS-1));
+
+      const grid = Array.from({length:ROWS}, ()=>Array(COLS).fill(" "));
+
+      // Ejes
+      for (let r = 0; r < ROWS; r++) grid[r][0] = "│";   // Y
+      grid[ROWS-1].fill("─");                            // X
+      grid[ROWS-1][0] = "└";
+
+      // Ticks Y cada 200ms (etiquetamos alternando)
+      const yTicks = new Set();
+      for (let v = 0; v <= yMax; v += 200){
+        const r = mapY(v);
+        if (r >= 0 && r < ROWS) yTicks.add(r);
+      }
+      yTicks.forEach(r => grid[r][0] = "┼");
+
+      // Ticks X cada 0.5s (etiquetamos solo enteros)
+      const xTickCols = new Set();
+      for (let v = 0; v <= xMax+1e-9; v += 0.5){
+        const c = mapX(v);
+        if (c >= 0 && c < COLS) xTickCols.add(c);
+      }
+      xTickCols.forEach(c => grid[ROWS-1][c] = "┬");
+
+      // Puntos (rojo = error)
+      puntos.forEach(p=>{
+        const c = mapX(p.x), r = mapY(p.y);
+        if (r>=0 && r<ROWS && c>=0 && c<COLS){
+          grid[r][c] = p.error ? '<span style="color:#ff5f5f">●</span>' : '●';
+        }
+      });
+
+      // Render con etiquetas Y a la izquierda
+      let graf = "Intervalo entre clics (ms)\n";
+      let toggle = 0;
+      for (let r=0; r<ROWS; r++){
+        const isTick = yTicks.has(r);
+        let yLab = "     ";
+        if (isTick){
+          const yVal = yMax - Math.round((yMax-yMin)*r/(ROWS-1));
+          const yNice = Math.round(yVal/200)*200;
+          if (toggle % 2 === 0) yLab = String(yNice).padStart(5," ");
+          toggle++;
+        }
+        graf += `${yLab} ${grid[r].join("")}\n`;
+      }
+
+      // Etiquetas X (enteros en segundos)
+      const xLabels = Array(COLS).fill(" ");
+      for (let v=0; v<=xMax; v+=1){
+        const c = mapX(v), txt = String(v);
+        let start = Math.max(0, c - Math.floor(txt.length/2));
+        for (let i=0;i<txt.length && start+i<xLabels.length;i++){
+          xLabels[start+i] = txt[i];
+        }
+      }
+      graf += "      " + xLabels.join("") + "\n";
+
+      // Título eje X
+      const xTitle = "Tiempo desde aparición de regla (s)";
+      const totalWidth = 6 + COLS;
+      const centered = Math.max(0, Math.floor((totalWidth - xTitle.length)/2));
+      graf += " ".repeat(centered) + xTitle + "\n";
+      // ======= Fin gráfico =======
+
+      const precision = totalRondas ? (aciertos/totalRondas*100).toFixed(1) : "0";
+      const avgReact = reacciones.length
+        ? (reacciones.reduce((s,r)=>s+r.reaccionMs,0)/reacciones.length).toFixed(2)
+        : "—";
+
+      document.getElementById("summary").innerHTML = `
+        <h2>Resultados</h2>
+        <p>Rondas totales: ${totalRondas}</p>
+        <p>Respuestas correctas: ${aciertos}</p>
+        <p>Precisión: ${precision}%</p>
+        <p>⏱️ Promedio de <strong>reacción</strong>: ${avgReact} ms</p>
+        <div style="text-align:center"><pre class="ascii">${graf}</pre></div>
+        <div style="white-space:pre; margin-top:.5rem; color:#aaa">
+Eje X: tiempo transcurrido desde que apareció la regla (segundos)
+Eje Y: intervalo entre clics consecutivos (ms)
+Puntos rojos = respuestas incorrectas
+        </div>
+      `;
+      document.getElementById("summary").style.display = "block";
+    }
+
+    function mostrarNuevaRonda(){
+      if (!juegoActivo) return;
+
+      // ¿toca cambiar de regla?
+      if (rondasRegla >= cambiarDespues){
+        let nueva;
+        do{
+          reglas = generarReglas();
+          nueva = reglas[Math.floor(Math.random()*reglas.length)];
+        }while(nueva.tipo===reglaActual?.tipo && nueva.valor===reglaActual?.valor);
+        reglaActual = nueva;
+        rondasRegla = 0;
+        cambiarDespues = 3 + Math.floor(Math.random()*5);
+        nuevaReglaPendiente = true; // la marca se hará al pintar la PRIMERA ronda
+      }
+
+      // Incrementos de ronda
+      rondasRegla++;
+      totalRondas++;
+
+      // Momento en que APARECE esta ronda (opciones visibles)
+      const ahoraMostrar = Date.now();
+      inicioTiempo = ahoraMostrar;
+      if (nuevaReglaPendiente || ruleStartAbs === null){
+        ruleStartAbs = ahoraMostrar;     // arrancamos X=0 en la primera ronda de la nueva regla
+        nuevaReglaPendiente = false;
+      }
+
+      // Render de la consigna (tres tipos)
+      const ruleEl = document.getElementById("ruleText");
+      if (reglaActual.tipo === "fondo"){
+        const color = reglaActual.valor;
+        ruleEl.innerHTML = `
+          ${reglaActual.texto}
+          <span style="
+            display:inline-block;width:100px;height:100px;
+            background:${color}; border:4px solid #fff; border-radius:12px;
+            vertical-align:middle;margin-left:12px;"></span>`;
+      } else if (reglaActual.tipo === "forma"){
+        const forma = reglaActual.valor;
+        ruleEl.innerHTML = `
+          ${reglaActual.texto}
+          <span style="
+            display:inline-flex;width:100px;height:100px;
+            background:#fff;border:4px solid #fff;border-radius:12px;
+            vertical-align:middle;margin-left:12px;align-items:center;justify-content:center;
+            color:#000;line-height:1;">
+            <span class="sym" style="font-size:4.2rem">${forma}</span>
+          </span>`;
+      } else if (reglaActual.tipo === "colorForma"){
+        const color = reglaActual.valor;
+        ruleEl.innerHTML = `
+          ${reglaActual.texto}
+          <span style="
+            display:inline-block;width:100px;height:100px;
+            background:${color}; border:4px solid #fff; border-radius:12px;
+            vertical-align:middle;margin-left:12px;"></span>`;
+      }
+
+      // Opciones
+      const cont = document.getElementById("optionsContainer");
+      cont.innerHTML = "";
+
+      const opcionCorrecta = generarOpcionAleatoria();
+      while (!reglaActual.condicion(opcionCorrecta)){
+        Object.assign(opcionCorrecta, generarOpcionAleatoria());
+      }
+      const opciones = [opcionCorrecta];
+      while (opciones.length < 4){
+        const op = generarOpcionAleatoria();
+        if (!opciones.some(o => o.forma===op.forma && o.fondo===op.fondo && o.color===op.color)
+            && !reglaActual.condicion(op)){
+          opciones.push(op);
+        }
+      }
+      opciones.sort(()=>Math.random()-0.5);
+
+      opciones.forEach(opt=>{
+        const div = document.createElement("div");
+        div.className = "option";
+        div.style.backgroundColor = opt.fondo;
+        div.style.color = opt.color;
+        div.innerHTML = `<span class="sym">${opt.forma}</span>`;
+        div.onclick = ()=>{
+          const t = Date.now();
+          const correcto = !!reglaActual.condicion(opt);
+          const reaccionMs = t - inicioTiempo;
+          const desdeReglaMs = t - ruleStartAbs;
+          if (correcto) aciertos++;
+          reacciones.push({ tAbs:t, reaccionMs, desdeReglaMs, correcto });
+          mostrarNuevaRonda();
+        };
+        cont.appendChild(div);
+      });
+    }
+
+    function generarOpcionAleatoria(){
+      return {
+        forma: FORMAS[Math.floor(Math.random()*FORMAS.length)],
+        fondo: COLORES_FONDO[Math.floor(Math.random()*COLORES_FONDO.length)],
+        color: COLORES_SIMBOLO[Math.floor(Math.random()*COLORES_SIMBOLO.length)]
+      };
+    }
+  </script>
+
+  <footer>
+ <center><a href="index.html" target="_blank"><img src="urania_logo.png" alt="Logo Urania" width="50"></a><center>
+    Creado por Urania – © 2025 Todos los derechos reservados
+  </footer>
+
+
+</body>
+</html>

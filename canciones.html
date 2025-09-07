@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Canciones – Listas por Arquetipo</title>
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --card:#12141a;
+      --ink:#e6e6e6;
+      --muted:#9aa3b2;
+      --cta:#6a5acd;
+      --cta-hover:#5941a9;
+      --border:#242a36;
+      --shadow:rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      margin:20px;
+      background:var(--bg);
+      color:var(--ink);
+    }
+    h1{ text-align:center; margin:0 0 14px }
+    .intro{
+      max-width:800px;
+      margin:0 auto 30px auto;
+      font-size:1.05em;
+      line-height:1.6;
+      color:var(--muted);
+      background: #0e1116;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:16px 18px;
+    }
+    .intro strong, .intro em { color: var(--ink); }
+    .quiz-button{
+      display:block;
+      margin:16px auto 0 auto;
+      padding:10px 20px;
+      background:var(--cta);
+      color:#fff;
+      text-decoration:none;
+      border-radius:10px;
+      text-align:center;
+      font-weight:bold;
+      width:fit-content;
+      border:1px solid transparent;
+    }
+    .quiz-button:hover{ background:var(--cta-hover) }
+    .search-container{
+      text-align:center;
+      margin-bottom:20px;
+    }
+    #search{
+      padding:10px 12px;
+      width:260px;
+      font-size:1em;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:#0e1116;
+      color:var(--ink);
+      outline:none;
+    }
+    .song-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+      gap:20px;
+      max-width:1100px;
+      margin:0 auto;
+    }
+    .song{
+      background:var(--card);
+      padding:15px;
+      border-radius:12px;
+      border:1px solid #222631;
+      box-shadow:0 6px 20px var(--shadow);
+      color:var(--ink);
+    }
+    .song strong{ display:block; margin-bottom:8px; font-size:14px }
+    audio{ width:100%; margin-top:8px }
+    .download-link{
+      display:inline-block;
+      margin-top:10px;
+      font-size:0.95em;
+      color:var(--cta);
+      text-decoration:none;
+    }
+    .download-link:hover{ text-decoration:underline }
+  </style>
+</head>
+<body>
+  <h1>Canciones por Arquetipo</h1>
+  
+  <div class="intro">
+  <p>
+    Estas pistas forman parte de una colección experimental inspirada en los
+    <strong>Arquetipos del SensoryVerse</strong>. Cada arquetipo representa una manera
+    de percibir, enfocarse y crear—y cada uno está vinculado con una pieza
+    musical diseñada para complementarlo.
+  </p>
+  <p>
+    Los títulos tienen dos partes: la primera es el <em>nombre del arquetipo</em>,
+    que proviene de los rasgos simbólicos encontrados en sus perfiles. La segunda
+    parte es el <em>nombre de la canción</em>, una composición inspirada en el estilo y
+    energía del arquetipo. Por ejemplo, <em>The Ethereal Observer –
+    Focus Groove</em> conecta el arquetipo con una pista rítmica que refleja su flujo.
+  </p>
+  <p>
+    Puedes explorar y escuchar libremente cualquier pista. Si deseas conocer
+    tu propio arquetipo (y el estilo musical asociado), puedes hacer el test a continuación.
+  </p>
+  <a class="quiz-button" href="quiz.html">✨ Hacer el Test ✨</a>
+</div>
+
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Buscar canciones...">
+  </div>
+
+  <div class="song-grid" id="songGrid">
+    <!-- Las canciones se insertarán aquí -->
+  </div>
+
+  <script>
+    const songs = [
+      "The Ethereal Observer - Focus in the Groove.mp3",
+      "The Ethereal Observer - Focus Groove.mp3",
+      "The Solar Guardian - Studying Waltz.mp3",
+      "The Solar Guardian - The Study Waltz.mp3",
+      "The Wild Catalyst - Echo of the Mind.mp3",
+      "The Wild Catalyst - Echoes of the Mind.mp3",
+      "The Wild Catalyst - Symphony of the Mind.mp3",
+      "The Wild Catalyst - Symphony of the Minds.mp3",
+      "The Celestial Sentinal - Brain Groove.mp3",
+      "The Celestial Sentinel - Brainy Groove.mp3",
+      "The Anchored Founder - Rising Flow.mp3",
+      "The Anchored Founder - Rise and Flow.mp3",
+      "The Inner Seer - Whisper in the Wires.mp3",
+      "The Inner Seer - Creative Currents.mp3",
+      "The Inner Seer - Creativity Currents.mp3",
+      "The Inner Seer - Creative Flower.mp3",
+      "The Inner Seer - Creative Flow.mp3",
+      "The Inner Seer - In the Wires Tonight.mp3",
+      "The Glowing Flamekeeper - Climbing the Quiet Mountain.mp3",
+      "The Glowing Flamekeeper - Climb the Quiet Mountain.mp3",
+      "The Burning Outsider - A Stiller Mind.mp3",
+      "The Burning Outsider - A Still Mind.mp3",
+      "The Silent Sculptor - Echoes of Thoughts.mp3",
+      "The Silent Sculptor - Echoes of Thought.mp3",
+      "The Burning Designer - Echoes of Eternity.mp3",
+      "The Burning Designer - Echoes of Eternities.mp3",
+      "The Inner Scholar.mp3",
+      "The Feral Conduit.mp3",
+      "The Inner Founder.mp3",
+      "The Inverted Decoder.mp3"
+    ];
+
+    const container = document.getElementById("songGrid");
+    const search = document.getElementById("search");
+
+    function renderSongs(filter = "") {
+      container.innerHTML = "";
+      songs
+        .filter(song => song.toLowerCase().includes(filter.toLowerCase()))
+        .forEach(song => {
+          const div = document.createElement("div");
+          div.className = "song";
+          div.innerHTML = `
+            <strong>${song}</strong>
+            <audio controls preload="none">
+              <source src="Songs/${song}" type="audio/mpeg">
+              Tu navegador no soporta el elemento de audio.
+            </audio>
+            <a class="download-link" href="Songs/${song}" download>⬇️ Descargar</a>
+          `;
+          container.appendChild(div);
+        });
+    }
+
+    // Pausar otros reproductores cuando uno comienza
+    function wireSoloPlayback(){
+      const players = Array.from(document.querySelectorAll('audio'));
+      players.forEach(a => {
+        a.addEventListener('play', () => {
+          players.forEach(b => { if (b !== a) b.pause(); });
+        });
+      });
+    }
+
+    search.addEventListener("input", () => {
+      renderSongs(search.value);
+      wireSoloPlayback();
+    });
+
+    renderSongs();
+    wireSoloPlayback();
+  </script>
+
+  <footer>
+ <center><a href="index.html" target="_blank"><img src="urania_logo.png" alt="Logo Urania" width="50"></a><center>
+
+    Creado por Urania – © 2025 Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>
