@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Canciones – Listas por Arquetipo</title>
+  <link rel="icon" type="image/png" href="SensoryVerse.png" />
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --card:#12141a;
+      --ink:#e6e6e6;
+      --muted:#9aa3b2;
+      --cta:#6a5acd;
+      --cta-hover:#5941a9;
+      --border:#242a36;
+      --shadow:rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      margin:20px;
+      background:var(--bg);
+      color:var(--ink);
+    }
+    h1{ text-align:center; margin:0 0 14px }
+
+    /* Playlist YouTube responsiva */
+    .video{
+      max-width:1100px; margin:14px auto 24px; border-radius:12px;
+      overflow:hidden; box-shadow:0 10px 30px var(--shadow);
+      border:1px solid var(--border); aspect-ratio:16/9;
+    }
+    .video iframe{ width:100%; height:100%; border:0 }
+
+    .intro{
+      max-width:800px;
+      margin:0 auto 30px auto;
+      font-size:1.05em;
+      line-height:1.6;
+      color:var(--muted);
+      background:#0e1116;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:16px 18px;
+    }
+    .intro strong, .intro em { color: var(--ink); }
+    .quiz-button{
+      display:block;
+      margin:16px auto 0 auto;
+      padding:10px 20px;
+      background:var(--cta);
+      color:#fff;
+      text-decoration:none;
+      border-radius:10px;
+      text-align:center;
+      font-weight:bold;
+      width:fit-content;
+      border:1px solid transparent;
+    }
+    .quiz-button:hover{ background:var(--cta-hover) }
+
+    .search-container{ text-align:center; margin:10px auto 20px }
+    #search{
+      padding:10px 12px; width:320px; max-width:90vw;
+      font-size:1em; border-radius:10px; border:1px solid var(--border);
+      background:#0e1116; color:var(--ink); outline:none;
+    }
+
+    /* Lista de descargas */
+    .dl-wrap{ max-width:1100px; margin:0 auto }
+    .dl-item{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      background:var(--card); border:1px solid #222631; border-radius:12px;
+      padding:14px 16px; box-shadow:0 6px 20px var(--shadow); margin-bottom:12px;
+    }
+    .filename{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .btn-dl{
+      background:var(--cta); color:#fff; text-decoration:none;
+      padding:8px 12px; border-radius:10px; font-weight:bold; border:1px solid transparent;
+    }
+    .btn-dl:hover{ background:var(--cta-hover) }
+
+    footer{ text-align:center; color:var(--muted); margin-top:28px }
+  </style>
+</head>
+<body>
+  <h1>Canciones por Arquetipo</h1>
+
+  <!-- Playlist oficial de YouTube para escuchar online -->
+  <div class="video">
+    <iframe
+      src="https://www.youtube.com/embed/videoseries?list=PLV-1r_Xc_da3doNuwod1I-CvaJ26w5xnU"
+      title="SensoryVerse – Playlist"
+      allowfullscreen
+      referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+  </div>
+  
+  <div class="intro">
+    <p>
+      Estas pistas forman parte de una colección experimental inspirada en los
+      <strong>Arquetipos del SensoryVerse</strong>. Cada arquetipo representa una manera
+      de percibir, enfocarse y crear—y cada uno está vinculado con una pieza
+      musical diseñada para complementarlo.
+    </p>
+    <p>
+      Los títulos tienen dos partes: la primera es el <em>nombre del arquetipo</em>,
+      y la segunda el <em>nombre de la canción</em>.
+    </p>
+    <p>
+      Si deseas conocer tu arquetipo y la música asociada, haz el test:
+    </p>
+    <a class="quiz-button" href="quiz.html">✨ Hacer el Test ✨</a>
+  </div>
+
+  <!-- Buscador para filtrar la lista de descargas -->
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Buscar canciones para descargar…">
+  </div>
+
+  <!-- SOLO DESCARGAS (sin reproductores) -->
+  <div class="dl-wrap" id="downloadList"></div>
+
+  <script>
+    // Lista de archivos MP3
+    const songs = [
+      "The Ethereal Observer - Focus in the Groove.mp3",
+      "The Ethereal Observer - Focus Groove.mp3",
+      "The Solar Guardian - Studying Waltz.mp3",
+      "The Solar Guardian - The Study Waltz.mp3",
+      "The Wild Catalyst - Echo of the Mind.mp3",
+      "The Wild Catalyst - Echoes of the Mind.mp3",
+      "The Wild Catalyst - Symphony of the Mind.mp3",
+      "The Wild Catalyst - Symphony of the Minds.mp3",
+      "The Celestial Sentinal - Brain Groove.mp3",
+      "The Celestial Sentinel - Brainy Groove.mp3",
+      "The Anchored Founder - Rising Flow.mp3",
+      "The Anchored Founder - Rise and Flow.mp3",
+      "The Inner Seer - Whisper in the Wires.mp3",
+      "The Inner Seer - Creative Currents.mp3",
+      "The Inner Seer - Creativity Currents.mp3",
+      "The Inner Seer - Creative Flower.mp3",
+      "The Inner Seer - Creative Flow.mp3",
+      "The Inner Seer - In the Wires Tonight.mp3",
+      "The Glowing Flamekeeper - Climbing the Quiet Mountain.mp3",
+      "The Glowing Flamekeeper - Climb the Quiet Mountain.mp3",
+      "The Burning Outsider - A Stiller Mind.mp3",
+      "The Burning Outsider - A Still Mind.mp3",
+      "The Silent Sculptor - Echoes of Thoughts.mp3",
+      "The Silent Sculptor - Echoes of Thought.mp3",
+      "The Burning Designer - Echoes of Eternity.mp3",
+      "The Burning Designer - Echoes of Eternities.mp3",
+      "The Inner Scholar.mp3",
+      "The Feral Conduit.mp3",
+      "The Inner Founder.mp3",
+      "The Inverted Decoder.mp3"
+    ];
+
+    // Carpeta con los MP3 en GitHub Pages (ajusta mayúsculas/minúsculas según tu repo)
+    const SONGS_DIR = 'Songs/'; // usa 'songs/' si la carpeta está en minúsculas
+    const fileUrl = (name) => SONGS_DIR + encodeURIComponent(name);
+
+    const list = document.getElementById('downloadList');
+    const search = document.getElementById('search');
+
+    function renderDownloads(filter=""){
+      list.innerHTML = "";
+      songs
+        .filter(s => s.toLowerCase().includes(filter.toLowerCase()))
+        .forEach(song => {
+          const url = fileUrl(song);
+          const row = document.createElement('div');
+          row.className = 'dl-item';
+          row.innerHTML = `
+            <span class="filename">🎵 ${song}</span>
+            <a class="btn-dl" target="_blank" href="${url}" download>⬇️ Descargar</a>
+          `;
+          list.appendChild(row);
+        });
+      if(!list.children.length){
+        list.innerHTML = `<div class="dl-item" style="justify-content:center;color:#9aa3b2">
+          No se encontraron canciones para “${filter}”.
+        </div>`;
+      }
+    }
+
+    search.addEventListener('input', () => renderDownloads(search.value));
+    renderDownloads();
+  </script>
+
+  <footer>
+    <center><a href="index.html" target="_blank"><img src="urania_logo.png" alt="Logo Urania" width="50"></a></center>
+    Creado por Urania – © 2025 Todos los derechos reservados.
+  </footer>
+</body>
+</html>

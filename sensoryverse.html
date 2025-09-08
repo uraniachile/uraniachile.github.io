@@ -3,309 +3,314 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bienvenido a SensoryVerse</title>
+  <title data-t="metaTitle">Bienvenido a SensoryVerse</title>
   <link rel="icon" href="SensoryVerse.png" />
   <style>
   
+  
+  
+  
+  /* Móvil: hacer más pequeños y evitar solape con el logo */
+  @media (max-width: 600px){
+    .language-switcher{ top:.35rem; right:.35rem; gap:.25rem; }
+    .language-switcher .lang-btn{ padding:.28rem .48rem; font-size:.78rem; border-radius:8px; }
+    .logo{ margin-top: 1.6rem; } /* separa el logo del switcher */
+  }
+
   /* Botón compacto reutilizando el estilo base .button */
-.button--sm{
-  padding: 0.45rem 0.75rem;
-  font-size: .9rem;
-  border-radius: 10px;
+  .button--sm{
+    padding: 0.45rem 0.75rem;
+    font-size: .9rem;
+    border-radius: 10px;
+  }
+  /* Quita subrayado y mantiene alineación del switcher */
+  .language-switcher a{
+    text-decoration: none;   /* sin underline */
+  }
+  /* Resalta el idioma activo */
+  .language-switcher .lang-btn[aria-current="page"]{
+    filter: brightness(0.9);
+    box-shadow: 0 0 0 2px #fff inset;
+    cursor: default;
+  }
+
+
+
+
+/* Paleta de enlaces (puedes ajustar los tonos) */
+:root{
+  --link:#76e3ff;        /* azul cian claro */
+  --link-hover:#00f2ff;  /* cian brillante (ya usas este tono) */
+  --link-visited:#caa5ff;/* lavanda para visitados */
+  --link-active:#8af6ff; /* clic */
+  --link-focus:#00f2ff;  /* anillo de enfoque accesible */
 }
 
-/* Quita subrayado y mantiene alineación del switcher */
-.language-switcher a{
-  text-decoration: none;   /* sin underline */
+/* Enlaces de texto (no botones) */
+a:not(.button):not(.lang-btn){
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: .08em;
+  text-underline-offset: .18em;
 }
 
-/* (Opcional) resalta el idioma activo */
-.language-switcher .lang-btn[aria-current="page"]{
-  filter: brightness(0.9);
-  box-shadow: 0 0 0 2px #fff inset;
-  cursor: default;
+/* Hover / visitado / activo */
+a:not(.button):not(.lang-btn):hover{
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
 }
-  
-  
-    :root{
-      --cyan:#00f2ff;
-      --bg1:#111;
-      --bg2:#000;
-      --card:#1e1e2f;
-      --muted:#ccc;
-      --muted2:#888;
-      --shadow:#00f2ff33;
-      --pill:#26304a;
-      --pill-b:#3b4e79;
-    }
-    html,body{scroll-behavior:smooth}
-    body {
-      font-family: sans-serif;
-      background: radial-gradient(var(--bg1), var(--bg2));
-      color: #eee;
-      margin: 0;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-    .container { max-width: 980px; margin: auto; }
-    .logo { width: 120px; margin-bottom: 1.2rem; }
-    h1 { color: var(--cyan); font-size: 2.2rem; margin: .2rem 0 1rem; }
-    h2 { color: var(--cyan); margin: 2.2rem 0 1rem; }
-    h3 { color: #e8ffff; margin: 1.2rem 0 .6rem; }
-    p { font-size: 1.05rem; color: var(--muted); margin: .75rem 0; line-height: 1.6; }
+a:not(.button):not(.lang-btn):visited{
+  color: var(--link-visited);
+}
+a:not(.button):not(.lang-btn):active{
+  color: var(--link-active);
+}
 
-    .intro {
-      background: var(--card);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      box-shadow: 0 0 15px var(--shadow);
-      margin-bottom: 1.5rem;
-    }
-    .language-switcher {
-      position: absolute; top: 1rem; right: 1rem; display: flex; gap: .5rem;
-    }
-    .button-group {
-      margin-top: 1.2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
-    }
-    a.button {
-      background: var(--cyan); color: #000; padding: 0.8rem 1.2rem; border-radius: 10px;
-      font-weight: bold; text-decoration: none; box-shadow: 0 0 10px var(--shadow);
-    }
-    a.button:hover { background: #00c2cc; }
+/* Accesibilidad al tabular */
+a:not(.button):not(.lang-btn):focus-visible{
+  outline: 2px solid var(--link-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
 
-    .two-col { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; }
-    @media (min-width: 840px){ .two-col { grid-template-columns: 1fr 1fr; } }
 
-    /* NUEVO: rejillas para arquetipos */
-    .grid-3 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-    @media (min-width: 720px){ .grid-3 { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 980px){ .grid-3 { grid-template-columns: 1fr 1fr 1fr; } }
+  :root{
+    --cyan:#00f2ff;
+    --bg1:#111;
+    --bg2:#000;
+    --card:#1e1e2f;
+    --muted:#ccc;
+    --muted2:#888;
+    --shadow:#00f2ff33;
+    --pill:#26304a;
+    --pill-b:#3b4e79;
+  }
+  html,body{scroll-behavior:smooth}
+  body {
+    font-family: sans-serif;
+    background: radial-gradient(var(--bg1), var(--bg2));
+    color: #eee;
+    margin: 0;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  .container { max-width: 980px; margin: auto; }
+  .logo { width: 120px; margin-bottom: 1.2rem; }
+  h1 { color: var(--cyan); font-size: 2.2rem; margin: .2rem 0 1rem; }
+  h2 { color: var(--cyan); margin: 2.2rem 0 1rem; }
+  h3 { color: #e8ffff; margin: 1.2rem 0 .6rem; }
+  p { font-size: 1.05rem; color: var(--muted); margin: .75rem 0; line-height: 1.6; }
 
-    .card {
-      background: var(--card);
-      border-radius: 1rem;
-      padding: 1.2rem 1.3rem;
-      text-align: left;
-      box-shadow: 0 0 15px var(--shadow);
-    }
-    .pill {
-      display:inline-block; padding:.2rem .6rem; border-radius:999px;
-      background:var(--pill); color:#cfefff; font-size:.85rem; margin:.15rem .25rem 0 0;
-      border:1px solid var(--pill-b);
-    }
-    .divider { margin: 2.2rem auto; border: none; border-top: 1px solid #444; width: min(980px, 92vw); }
-    footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted2); }
-    .small { font-size:.95rem; color:#b9cfd6; }
-    .note { font-size:.95rem; color:#b9cfd6; background:#151526; padding:.75rem 1rem; border-radius:.75rem; }
+  .intro {
+    background: var(--card);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 0 15px var(--shadow);
+    margin-bottom: 1.5rem;
+  }
+  .language-switcher {
+    position: absolute; top: 1rem; right: 1rem; display: flex; gap: .5rem;
+  }
+  .button-group {
+    margin-top: 1.2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+  }
+  a.button {
+    background: var(--cyan); color: #000; padding: 0.8rem 1.2rem; border-radius: 10px;
+    font-weight: bold; text-decoration: none; box-shadow: 0 0 10px var(--shadow);
+  }
+  a.button:hover { background: #00c2cc; }
 
-    /* Estilo sutil para encabezado de tarjeta arquetipo */
-    .arch-title { display:flex; align-items:center; gap:.5rem; margin-bottom:.35rem; }
-    .arch-title span.emoji{ font-size:1.35rem; }
-    .arch-foot { margin-top:.6rem; font-size:.92rem; color:#b9cfd6; }
+  .two-col { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; }
+  @media (min-width: 840px){ .two-col { grid-template-columns: 1fr 1fr; } }
+
+  /* Rejillas para arquetipos */
+  .grid-3 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  @media (min-width: 720px){ .grid-3 { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 980px){ .grid-3 { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .card {
+    background: var(--card);
+    border-radius: 1rem;
+    padding: 1.2rem 1.3rem;
+    text-align: left;
+    box-shadow: 0 0 15px var(--shadow);
+  }
+  .pill {
+    display:inline-block; padding:.2rem .6rem; border-radius:999px;
+    background:var(--pill); color:#cfefff; font-size:.85rem; margin:.15rem .25rem 0 0;
+    border:1px solid var(--pill-b);
+  }
+  .divider { margin: 2.2rem auto; border: none; border-top: 1px solid #444; width: min(980px, 92vw); }
+  footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted2); }
+  .small { font-size:.95rem; color:#b9cfd6; }
+  .note { font-size:.95rem; color:#b9cfd6; background:#151526; padding:.75rem 1rem; border-radius:.75rem; }
+
+  /* Encabezado de tarjeta arquetipo */
+  .arch-title { display:flex; align-items:center; gap:.5rem; margin-bottom:.35rem; }
+  .arch-title span.emoji{ font-size:1.35rem; }
+  .arch-foot { margin-top:.6rem; font-size:.92rem; color:#b9cfd6; }
   </style>
 </head>
 <body>
 
   <!-- Selector de idioma -->
-<div class="language-switcher" role="navigation" aria-label="Selector de idioma">
-  <a href="sensoryverse.html"     class="button button--sm lang-btn" aria-current="page">🇪🇸 ES</a>
-  <a href="sensoryverse_en.html"  class="button button--sm lang-btn">🇬🇧 EN</a>
-  <a href="sensoryverse_fr.html"  class="button button--sm lang-btn">🇫🇷 FR</a>
-</div>
+  <nav class="language-switcher" aria-label="Selector de idioma">
+    <a href="#" class="button button--sm lang-btn" id="btnES" aria-current="page">🇪🇸 ES</a>
+    <a href="#" class="button button--sm lang-btn" id="btnEN">🇬🇧 EN</a>
+    <a href="#" class="button button--sm lang-btn" id="btnFR">🇫🇷 FR</a>
+  </nav>
 
   <div class="container">
-    <img src="SensoryVerse.png" alt="Logo SensoryVerse" class="logo" />
-    <h1>Bienvenido a SensoryVerse</h1>
+      <center><a href="sensoryverse.html" target="_blank"><img src="SensoryVerse.png" alt="Logo SensoryVerse" class="logo" /></a></center>
+    <h1 data-t="h1">Bienvenido a SensoryVerse</h1>
 
     <section class="intro">
-      <p>Creado por un equipo de astrofísicos, neurocientíficos, emprendedores, diseñadores de videojuegos y expertos en inteligencia artificial, combina ciencia y creatividad: comienza con un breve cuestionario para trazar tu “constelación” cognitiva, y luego explora minijuegos — o disfruta canciones de enfoque inspiradas en los <strong>arquetipos de SensoryVerse</strong> — que revelan tus patrones de atención, memoria, flexibilidad y equilibrio sensorial.</p>
+      <p data-t="intro">
+        Creado por un equipo de astrofísicos, neurocientíficos, emprendedores, diseñadores de videojuegos y expertos en inteligencia artificial, combina ciencia y creatividad: comienza con un breve cuestionario para trazar tu “constelación” cognitiva, y luego explora minijuegos — o disfruta canciones de enfoque inspiradas en los <strong>arquetipos de SensoryVerse</strong> — que revelan tus patrones de atención, memoria, flexibilidad y equilibrio sensorial.
+      </p>
       <div class="button-group">
-        <a href="quiz.html" class="button" target="_blank">🧠 Hacer el Quiz</a>
-        <a href="juegos.html" class="button" target="_blank">🎮 Probar los Juegos</a>
-        <a href="canciones.html" class="button" target="_blank">🎵 Explora las Canciones</a>
-        <a href="#science" class="button">🔬 La Ciencia</a>
+        <a href="quiz.html" class="button" target="_blank" data-t="btnQuiz">🧠 Hacer el Quiz</a>
+        <a href="juegos.html" class="button" target="_blank" data-t="btnGames">🎮 Probar los Juegos</a>
+        <a href="songs.html" class="button" target="_blank" data-t="btnSongs">🎵 Explora las Canciones</a>
+        <a href="#science" class="button" data-t="btnScience">🔬 La Ciencia</a>
       </div>
     </section>
 
     <section id="science">
-      <h2>🔬 La ciencia detrás de SensoryVerse</h2>
+      <h2 data-t="scienceTitle">🔬 La ciencia detrás de SensoryVerse</h2>
       <div class="two-col">
         <div class="card">
-          <h3>De los “estilos de aprendizaje” a los rasgos medibles</h3>
-          <p>Durante décadas, la idea de los “estilos de aprendizaje” fue popular. La evidencia sugiere que enseñar estrictamente según un estilo no mejora de forma consistente los resultados. Lo que sí importa son los <em>rasgos cognitivos medibles</em> que influyen en cómo procesamos y recordamos la información.</p>
-          <p>SensoryVerse se centra en rasgos como: ritmo de atención, preferencia por entornos sensoriales ricos o minimalistas, equilibrio analítico–asociativo y el papel de la emoción. Los <strong>arquetipos</strong> son una <em>metáfora combinable</em> construida sobre estos rasgos: sirven para comunicar, no para encasillar.</p>
+          <h3 data-t="s1t">De los “estilos de aprendizaje” a los rasgos medibles</h3>
+          <p data-t="s1p1">Durante décadas, la idea de los “estilos de aprendizaje” fue popular. La evidencia sugiere que enseñar estrictamente según un estilo no mejora de forma consistente los resultados.</p>
+          <p data-t="s1p2">Lo que sí importa son rasgos como ritmo de atención, preferencia sensorial, equilibrio analítico–asociativo y el papel de la emoción. Los <strong>arquetipos</strong> son una metáfora combinable sobre estos rasgos.</p>
         </div>
         <div class="card">
-          <h3>Por qué importa</h3>
-          <p>En vez de exigir que todos se adapten a un único entorno, adaptamos el entorno a la persona. Esto beneficia a perfiles diversos y neurodivergentes, convirtiendo diferencias en fortalezas cuando el contexto se ajusta bien.</p>
+          <h3 data-t="s2t">Por qué importa</h3>
+          <p data-t="s2p">En vez de exigir que todos se adapten a un único entorno, adaptamos el entorno a la persona. Es útil para perfiles diversos y neurodivergentes.</p>
           <ul>
-            <li><strong>Diseño instruccional:</strong> ajustar representaciones y ritmo.</li>
-            <li><strong>Herramientas de enfoque:</strong> música, ritmo y rituales anti-distracción.</li>
-            <li><strong>Evaluación:</strong> observar adaptación bajo carga, no sólo memorización.</li>
+            <li data-t="s2l1"><strong>Diseño instruccional:</strong> ajustar representaciones y ritmo.</li>
+            <li data-t="s2l2"><strong>Herramientas de enfoque:</strong> música, ritmo y rituales anti-distracción.</li>
+            <li data-t="s2l3"><strong>Evaluación:</strong> observar adaptación bajo carga, no sólo memorización.</li>
           </ul>
         </div>
       </div>
 
       <div class="two-col">
         <div class="card">
-          <h3>Cómo SensoryVerse obtiene información</h3>
+          <h3 data-t="s3t">Cómo SensoryVerse obtiene información</h3>
           <ol>
-            <li><strong>Cuestionarios</strong> sobre atención, procesamiento y participación.</li>
-            <li><strong>Micro-juegos</strong> que miden reacción, cambio de reglas, memoria visual/verbal y tolerancia sensorial.</li>
+            <li data-t="s3l1"><strong>Cuestionarios</strong> sobre atención, procesamiento y participación.</li>
+            <li data-t="s3l2"><strong>Micro-juegos</strong> que miden reacción, cambio de reglas, memoria visual/verbal y tolerancia sensorial.</li>
           </ol>
-          <p>Cuando autopercepción y conducta medida coinciden, sube la confianza; cuando difieren, señalan oportunidades de ajuste y entrenamiento.</p>
+          <p data-t="s3p">Si autopercepción y conducta medida coinciden, sube la confianza; si difieren, hay oportunidades de ajuste y entrenamiento.</p>
         </div>
         <div class="card">
-          <h3>Líneas de investigación</h3>
+          <h3 data-t="s4t">Líneas de investigación</h3>
           <ul>
-            <li>Fiabilidad de tareas breves de atención, flexibilidad y carga sensorial.</li>
-            <li>Efecto de adaptar entorno/ritmo en motivación y retención.</li>
-            <li>Datos y métodos abiertos para reproducibilidad.</li>
+            <li data-t="s4l1">Fiabilidad de tareas breves de atención, flexibilidad y carga sensorial.</li>
+            <li data-t="s4l2">Efecto de adaptar entorno/ritmo en motivación y retención.</li>
+            <li data-t="s4l3">Datos y métodos abiertos para reproducibilidad.</li>
           </ul>
         </div>
       </div>
 
+      <!-- Ética + Referencias en columnas -->
       <div class="two-col">
         <div class="card">
-          <h3>Ética y privacidad</h3>
+          <h3 data-t="s5t">Ética y privacidad</h3>
           <ul>
-            <li><strong>Datos mínimos</strong>: sólo lo necesario para feedback y mejora.</li>
-            <li><strong>Local primero</strong>: análisis en tu navegador cuando sea posible.</li>
-            <li><strong>Anonimización</strong>: desempeño sin datos personales.</li>
-            <li><strong>Consentimiento claro</strong>: investigación opcional.</li>
+            <li data-t="s5l1"><strong>Datos mínimos</strong>: sólo lo necesario para feedback y mejora.</li>
+            <li data-t="s5l2"><strong>Local primero</strong>: análisis en tu navegador cuando sea posible.</li>
+            <li data-t="s5l3"><strong>Anonimización</strong>: desempeño sin datos personales.</li>
+            <li data-t="s5l4"><strong>Consentimiento claro</strong>: investigación opcional.</li>
           </ul>
         </div>
-      </div>
 
-      <h3 style="margin-top:2rem;">📚 Referencias</h3>
-      <ul>
-        <li>Pashler et al. (2008). <em>Learning styles: Concepts and evidence.</em></li>
-        <li>Kirschner (2017). <em>Stop propagating the learning styles myth.</em></li>
-        <li>Schneider & Chein (2003). <em>Controlled & automatic processing…</em></li>
-        <li>D’Mello & Graesser (2012). <em>Dynamics of affective states…</em></li>
-        <li>Koedinger et al. (2012). <em>Knowledge-learning-instruction framework.</em></li>
-      </ul>
+        <div class="card">
+          <h3 data-t="refsTitle">📚 Referencias</h3>
+          <ul id="refsList"></ul>
+        </div>
+      </div>
     </section>
 
     <hr class="divider" />
 
-    <!-- NUEVO: Arquetipos -->
+    <!-- Arquetipos -->
     <section id="arquetipos">
-      <h2>🧭 Arquetipos de aprendizaje (mezclables)</h2>
-      <p class="note" style="text-align:left">
-        Los arquetipos son <strong>metáforas útiles</strong> basadas en rasgos medibles. No te encasillan: la mayoría de las personas
-        combina 2–3 arquetipos según la tarea y el contexto. El quiz y los micro-juegos estiman tu <em>mezcla</em>.
+      <h2 data-t="archTitle">🧭 Arquetipos de aprendizaje (mezclables)</h2>
+      <p class="note" style="text-align:left" data-t="archNote">
+        Los arquetipos son <strong>metáforas útiles</strong> basadas en rasgos medibles. No te encasillan: la mayoría combina 2–3 arquetipos según la tarea y el contexto.
       </p>
 
       <div class="grid-3" style="margin-top:1rem">
         <div class="card">
-          <div class="arch-title"><span class="emoji">🗺️</span><h3 style="margin:0">Explorador Visual</h3></div>
-          <p>Aprende mejor con mapas, esquemas, diagramas y ejemplos visuales dinámicos.</p>
-          <div>
-            <span class="pill">Atención: sostenida</span>
-            <span class="pill">Preferencia: visual</span>
-            <span class="pill">Entorno: medio</span>
-          </div>
-          <div class="arch-foot">Sugerencias SV: mapas mentales, gráficos interactivos, “canciones foco visual”.</div>
+          <div class="arch-title"><span class="emoji">🗺️</span><h3 style="margin:0" data-t="a1t">Explorador Visual</h3></div>
+          <p data-t="a1p">Aprende mejor con mapas, esquemas y ejemplos visuales.</p>
+          <div class="arch-foot" data-t="a1f">Sugerencias: mapas mentales y gráficos interactivos.</div>
         </div>
 
         <div class="card">
-          <div class="arch-title"><span class="emoji">🎧</span><h3 style="margin:0">Oyente Rítmico</h3></div>
-          <p>Usa ritmo, voz y sonido para estructurar la atención. Le ayudan pautas auditivas discretas.</p>
-          <div>
-            <span class="pill">Atención: rítmica</span>
-            <span class="pill">Preferencia: auditiva</span>
-            <span class="pill">Entorno: bajo/medio</span>
-          </div>
-          <div class="arch-foot">Sugerencias SV: métricas por etapas, “canciones metronómicas”.</div>
+          <div class="arch-title"><span class="emoji">🎧</span><h3 style="margin:0" data-t="a2t">Oyente Rítmico</h3></div>
+          <p data-t="a2p">Usa ritmo y voz para estructurar la atención.</p>
+          <div class="arch-foot" data-t="a2f">Sugerencias: pautas auditivas y métrica por etapas.</div>
         </div>
 
         <div class="card">
-          <div class="arch-title"><span class="emoji">🧩</span><h3 style="margin:0">Constructor Espacial</h3></div>
-          <p>Piensa con las manos: modelos, bloques lógicos, 3D, rutas y transformaciones.</p>
-          <div>
-            <span class="pill">Memoria: visoespacial</span>
-            <span class="pill">Preferencia: manipulación</span>
-            <span class="pill">Entorno: medio</span>
-          </div>
-          <div class="arch-foot">Sugerencias SV: puzzles espaciales, simulaciones simples.</div>
+          <div class="arch-title"><span class="emoji">🧩</span><h3 style="margin:0" data-t="a3t">Constructor Espacial</h3></div>
+          <p data-t="a3p">Piensa con modelos, bloques lógicos y 3D.</p>
+          <div class="arch-foot" data-t="a3f">Sugerencias: puzzles espaciales y simulaciones.</div>
         </div>
 
         <div class="card">
-          <div class="arch-title"><span class="emoji">📊</span><h3 style="margin:0">Analista Secuencial</h3></div>
-          <p>Le funciona el paso-a-paso con objetivos claros y retroalimentación inmediata.</p>
-          <div>
-            <span class="pill">Pensamiento: analítico</span>
-            <span class="pill">Ritmo: lineal</span>
-            <span class="pill">Entorno: bajo</span>
-          </div>
-          <div class="arch-foot">Sugerencias SV: listas de chequeo, mini-misiones y métricas.</div>
+          <div class="arch-title"><span class="emoji">📊</span><h3 style="margin:0" data-t="a4t">Analista Secuencial</h3></div>
+          <p data-t="a4p">Le funciona el paso-a-paso con feedback inmediato.</p>
+          <div class="arch-foot" data-t="a4f">Sugerencias: listas de chequeo y mini-misiones.</div>
         </div>
 
         <div class="card">
-          <div class="arch-title"><span class="emoji">🌈</span><h3 style="margin:0">Soñador Asociativo</h3></div>
-          <p>Encuentra patrones y analogías; aprende con metáforas, collage y libertad creativa.</p>
-          <div>
-            <span class="pill">Pensamiento: asociativo</span>
-            <span class="pill">Preferencia: multisensorial</span>
-            <span class="pill">Entorno: creativo</span>
-          </div>
-          <div class="arch-foot">Sugerencias SV: mezclador de estímulos, retos abiertos.</div>
+          <div class="arch-title"><span class="emoji">🌈</span><h3 style="margin:0" data-t="a5t">Soñador Asociativo</h3></div>
+          <p data-t="a5p">Encuentra patrones y analogías con libertad creativa.</p>
+          <div class="arch-foot" data-t="a5f">Sugerencias: mezclador de estímulos y retos abiertos.</div>
         </div>
 
         <div class="card">
-          <div class="arch-title"><span class="emoji">📖</span><h3 style="margin:0">Narrador Simbólico</h3></div>
-          <p>Organiza el conocimiento en historias, símbolos y ejemplos cotidianos.</p>
-          <div>
-            <span class="pill">Memoria: verbal/episódica</span>
-            <span class="pill">Preferencia: narrativa</span>
-            <span class="pill">Entorno: medio</span>
-          </div>
-          <div class="arch-foot">Sugerencias SV: misiones con relato y roles.</div>
+          <div class="arch-title"><span class="emoji">📖</span><h3 style="margin:0" data-t="a6t">Narrador Simbólico</h3></div>
+          <p data-t="a6p">Organiza el conocimiento en historias y símbolos.</p>
+          <div class="arch-foot" data-t="a6f">Sugerencias: misiones con relato y roles.</div>
         </div>
 
         <div class="card">
-          <div class="arch-title"><span class="emoji">🤝</span><h3 style="margin:0">Colaborador Social</h3></div>
-          <p>Aprende dialogando: pares, demostraciones y alternancia de roles.</p>
-          <div>
-            <span class="pill">Motivación: social</span>
-            <span class="pill">Preferencia: interacción</span>
-            <span class="pill">Entorno: medio</span>
-          </div>
-          <div class="arch-foot">Sugerencias SV: co-resolución y turnos guiados.</div>
+          <div class="arch-title"><span class="emoji">🤝</span><h3 style="margin:0" data-t="a7t">Colaborador Social</h3></div>
+          <p data-t="a7p">Aprende dialogando y alternando roles.</p>
+          <div class="arch-foot" data-t="a7f">Sugerencias: co-resolución y turnos guiados.</div>
         </div>
 
         <div class="card">
-          <div class="arch-title"><span class="emoji">🧘</span><h3 style="margin:0">Autónomo Minimalista</h3></div>
-          <p>Rinde mejor con distracciones mínimas, objetivos compactos y control del ritmo.</p>
-          <div>
-            <span class="pill">Carga: baja</span>
-            <span class="pill">Ritmo: auto-pacing</span>
-            <span class="pill">Entorno: silencioso</span>
-          </div>
-          <div class="arch-foot">Sugerencias SV: modo foco, UI limpia, pausas programadas.</div>
+          <div class="arch-title"><span class="emoji">🧘</span><h3 style="margin:0" data-t="a8t">Autónomo Minimalista</h3></div>
+          <p data-t="a8p">Rinde mejor con distracciones mínimas y control del ritmo.</p>
+          <div class="arch-foot" data-t="a8f">Sugerencias: modo foco, UI limpia y pausas.</div>
         </div>
       </div>
 
       <div class="button-group" style="margin-top:1.2rem">
-        <a href="quiz.html" class="button" target="_blank">🔎 Descubre tu mezcla</a>
-        <a href="juegos.html" class="button" target="_blank">🎮 Entrena con minijuegos</a>
-        <a href="canciones.html" class="button" target="_blank">🎵 Canciones por arquetipo</a>
+        <a href="quiz.html" class="button" target="_blank" data-t="ctaMix">🔎 Descubre tu mezcla</a>
+        <a href="juegos.html" class="button" target="_blank" data-t="ctaGames">🎮 Entrena con minijuegos</a>
+        <a href="songs.html" class="button" target="_blank" data-t="ctaSongs">🎵 Canciones por arquetipo</a>
       </div>
     </section>
 
     <hr class="divider" />
 
     <section>
-      <h2>Comienza aquí</h2>
-      <p>Empieza con el quiz rápido para mapear tu constelación cognitiva. Luego explora los mini-juegos y sumérgete en las canciones de enfoque inspiradas en los arquetipos. Tus comentarios guían la próxima iteración.</p>
+      <h2 data-t="startTitle">Comienza aquí</h2>
+      <p data-t="startText">Empieza con el quiz, explora los mini-juegos y sumérgete en las canciones de enfoque. Tus comentarios guían la próxima iteración.</p>
       <div class="button-group">
-        <a href="quiz_es.html" class="button" target="_blank">🧠 Haz el Quiz</a>
-        <a href="games.html" class="button" target="_blank">🎮 Prueba los Juegos</a>
-        <a href="songs.html" class="button" target="_blank">🎵 Explora las Canciones</a>
+        <a href="quiz_es.html" class="button" target="_blank" data-t="btnQuiz2">🧠 Haz el Quiz</a>
+        <a href="games.html" class="button" target="_blank" data-t="btnGames2">🎮 Prueba los Juegos</a>
+        <a href="songs.html" class="button" target="_blank" data-t="btnSongs2">🎵 Explora las Canciones</a>
       </div>
-      <p class="small" style="margin-top:1rem;">
-        ¿Preguntas o ideas de colaboración? <a href="mailto:uraniachile@gmail.com" style="color: var(--cyan);">uraniachile@gmail.com</a> — 
+      <p class="small" style="margin-top:1rem;" data-t="contactLine">
+        ¿Preguntas o ideas de colaboración? <a href="mailto:uraniachile@gmail.com" style="color: var(--cyan);">uraniachile@gmail.com</a> —
         Síguenos en <a href="https://www.youtube.com/@SensoryVerse" target="_blank" style="color: var(--cyan);">YouTube</a>
       </p>
     </section>
@@ -313,7 +318,250 @@
 
   <footer>
     <center><a href="index.html" target="_blank"><img src="urania_logo.png" alt="Logo Urania" width="50"></a></center>
-    Creado por Urania — © 2025 Todos los derechos reservados.
+    <span data-t="footer">Creado por Urania — © 2025 Todos los derechos reservados.</span>
   </footer>
+
+  <script>
+    // ===== Diccionario UI (ES/EN/FR) =====
+    const dict = {
+      es: {
+        metaTitle:"Bienvenido a SensoryVerse",
+        h1:"Bienvenido a SensoryVerse",
+        intro:"Creado por un equipo de astrofísicos, neurocientíficos, emprendedores, diseñadores de videojuegos y expertos en inteligencia artificial, combina ciencia y creatividad: comienza con un breve cuestionario para trazar tu “constelación” cognitiva, y luego explora minijuegos — o disfruta canciones de enfoque inspiradas en los <strong>arquetipos de SensoryVerse</strong> — que revelan tus patrones de atención, memoria, flexibilidad y equilibrio sensorial.",
+        btnQuiz:"🧠 Hacer el Quiz",
+        btnGames:"🎮 Probar los Juegos",
+        btnSongs:"🎵 Explora las Canciones",
+        btnScience:"🔬 La Ciencia",
+        scienceTitle:"🔬 La ciencia detrás de SensoryVerse",
+        s1t:"De los “estilos de aprendizaje” a los rasgos medibles",
+        s1p1:"Durante décadas, la idea de los “estilos de aprendizaje” fue popular. La evidencia sugiere que enseñar estrictamente según un estilo no mejora de forma consistente los resultados.",
+        s1p2:"Lo que sí importa son rasgos como ritmo de atención, preferencia sensorial, equilibrio analítico–asociativo y el papel de la emoción. Los arquetipos son una metáfora combinable sobre estos rasgos.",
+        s2t:"Por qué importa",
+        s2p:"En vez de exigir que todos se adapten a un único entorno, adaptamos el entorno a la persona. Es útil para perfiles diversos y neurodivergentes.",
+        s2l1:"Diseño instruccional: ajustar representaciones y ritmo.",
+        s2l2:"Herramientas de enfoque: música, ritmo y rituales anti-distracción.",
+        s2l3:"Evaluación: observar adaptación bajo carga, no sólo memorización.",
+        s3t:"Cómo SensoryVerse obtiene información",
+        s3l1:"Cuestionarios sobre atención, procesamiento y participación.",
+        s3l2:"Micro-juegos que miden reacción, cambio de reglas, memoria visual/verbal y tolerancia sensorial.",
+        s3p:"Si autopercepción y conducta medida coinciden, sube la confianza; si difieren, hay oportunidades de ajuste y entrenamiento.",
+        s4t:"Líneas de investigación",
+        s4l1:"Fiabilidad de tareas breves de atención, flexibilidad y carga sensorial.",
+        s4l2:"Efecto de adaptar entorno/ritmo en motivación y retención.",
+        s4l3:"Datos y métodos abiertos para reproducibilidad.",
+        s5t:"Ética y privacidad",
+        s5l1:"Datos mínimos: sólo lo necesario para feedback y mejora.",
+        s5l2:"Local primero: análisis en tu navegador cuando sea posible.",
+        s5l3:"Anonimización: desempeño sin datos personales.",
+        s5l4:"Consentimiento claro: investigación opcional.",
+        refsTitle:"📚 Referencias",
+        archTitle:"🧭 Arquetipos de aprendizaje (mezclables)",
+        archNote:"Los arquetipos son metáforas útiles basadas en rasgos medibles. No te encasillan: la mayoría combina 2–3 arquetipos según la tarea y el contexto.",
+        a1t:"Explorador Visual", a1p:"Aprende mejor con mapas, esquemas y ejemplos visuales.", a1f:"Sugerencias: mapas mentales y gráficos interactivos.",
+        a2t:"Oyente Rítmico", a2p:"Usa ritmo y voz para estructurar la atención.", a2f:"Sugerencias: pautas auditivas y métrica por etapas.",
+        a3t:"Constructor Espacial", a3p:"Piensa con modelos, bloques lógicos y 3D.", a3f:"Sugerencias: puzzles espaciales y simulaciones.",
+        a4t:"Analista Secuencial", a4p:"Le funciona el paso-a-paso con feedback inmediato.", a4f:"Sugerencias: listas de chequeo y mini-misiones.",
+        a5t:"Soñador Asociativo", a5p:"Encuentra patrones y analogías con libertad creativa.", a5f:"Sugerencias: mezclador de estímulos y retos abiertos.",
+        a6t:"Narrador Simbólico", a6p:"Organiza el conocimiento en historias y símbolos.", a6f:"Sugerencias: misiones con relato y roles.",
+        a7t:"Colaborador Social", a7p:"Aprende dialogando y alternando roles.", a7f:"Sugerencias: co-resolución y turnos guiados.",
+        a8t:"Autónomo Minimalista", a8p:"Rinde mejor con distracciones mínimas y control del ritmo.", a8f:"Sugerencias: modo foco, UI limpia y pausas.",
+        ctaMix:"🔎 Descubre tu mezcla", ctaGames:"🎮 Entrena con minijuegos", ctaSongs:"🎵 Canciones por arquetipo",
+        startTitle:"Comienza aquí",
+        startText:"Empieza con el quiz, explora los mini-juegos y sumérgete en las canciones de enfoque. Tus comentarios guían la próxima iteración.",
+        btnQuiz2:"🧠 Haz el Quiz", btnGames2:"🎮 Prueba los Juegos", btnSongs2:"🎵 Explora las Canciones",
+        contactLine:"¿Preguntas o ideas de colaboración? <a href='mailto:uraniachile@gmail.com' style='color: var(--cyan);'>uraniachile@gmail.com</a> — Síguenos en <a href='https://www.youtube.com/@SensoryVerse' target='_blank' style='color: var(--cyan);'>YouTube</a>",
+        footer:"Creado por Urania — © 2025 Todos los derechos reservados."
+      },
+      en: {
+        metaTitle:"Welcome to SensoryVerse",
+        h1:"Welcome to SensoryVerse",
+        intro:"Created by a team of astrophysicists, neuroscientists, entrepreneurs, game designers and AI experts. Start with a short questionnaire to map your cognitive 'constellation', then explore micro-games — or focus songs inspired by the <strong>SensoryVerse archetypes</strong> — that reveal patterns of attention, memory, flexibility and sensory balance.",
+        btnQuiz:"🧠 Take the Quiz",
+        btnGames:"🎮 Try the Games",
+        btnSongs:"🎵 Explore the Songs",
+        btnScience:"🔬 The Science",
+        scienceTitle:"🔬 The science behind SensoryVerse",
+        s1t:"From 'learning styles' to measurable traits",
+        s1p1:"For decades, 'learning styles' were popular. Evidence shows strictly teaching to a declared style does not reliably improve outcomes.",
+        s1p2:"What matters are measurable traits: attention rhythm, sensory preference, analytic–associative balance, and emotion. Archetypes are a combinable metaphor built on these traits.",
+        s2t:"Why it matters",
+        s2p:"Instead of forcing everyone to fit one environment, we adapt environments to the learner — helpful for diverse and neurodivergent profiles.",
+        s2l1:"Instructional design: adapt representations and pacing.",
+        s2l2:"Focus tools: music, rhythm, and anti-distraction rituals.",
+        s2l3:"Assessment: observe adaptation under load, not just recall.",
+        s3t:"How SensoryVerse learns about you",
+        s3l1:"Questionnaires about attention, processing and engagement.",
+        s3l2:"Micro-games measuring reaction, rule-switching, visual/verbal memory and sensory tolerance.",
+        s3p:"Agreement between self-report and behavior boosts confidence; disagreement highlights coaching opportunities.",
+        s4t:"Research lines",
+        s4l1:"Reliability of brief attention/flexibility/sensory-load tasks.",
+        s4l2:"Effect of adapting environment/pacing on motivation and retention.",
+        s4l3:"Open data and methods for reproducibility.",
+        s5t:"Ethics & privacy",
+        s5l1:"Minimal data: only what’s needed for feedback and improvement.",
+        s5l2:"Local-first: analyze in your browser when possible.",
+        s5l3:"Anonymization: performance without personal data.",
+        s5l4:"Clear consent: research is optional.",
+        refsTitle:"📚 References",
+        archTitle:"🧭 Learning archetypes (blendable)",
+        archNote:"Archetypes are useful metaphors anchored in measurable traits. Most people blend 2–3 depending on task and context.",
+        a1t:"Visual Explorer", a1p:"Learns best with maps, diagrams and examples.", a1f:"Suggestions: mind maps and interactive charts.",
+        a2t:"Rhythmic Listener", a2p:"Uses rhythm/voice to structure attention.", a2f:"Suggestions: subtle auditory cues and staged pacing.",
+        a3t:"Spatial Builder", a3p:"Thinks with models, blocks and 3D.", a3f:"Suggestions: spatial puzzles and simulations.",
+        a4t:"Sequential Analyst", a4p:"Step-by-step with instant feedback.", a4f:"Suggestions: checklists and mini-missions.",
+        a5t:"Associative Dreamer", a5p:"Finds patterns and analogies with creative freedom.", a5f:"Suggestions: stimulus mixer and open-ended prompts.",
+        a6t:"Symbolic Storyteller", a6p:"Organizes knowledge with stories and symbols.", a6f:"Suggestions: narrative missions and roles.",
+        a7t:"Social Collaborator", a7p:"Learns by dialogue and role-switching.", a7f:"Suggestions: co-solution and guided turns.",
+        a8t:"Minimalist Soloist", a8p:"Performs best with low distraction and self-pacing.", a8f:"Suggestions: focus mode, clean UI, scheduled breaks.",
+        ctaMix:"🔎 Find your blend", ctaGames:"🎮 Train with micro-games", ctaSongs:"🎵 Songs by archetype",
+        startTitle:"Start here",
+        startText:"Begin with the quiz, try the micro-games, and dive into focus songs. Your feedback guides the next iteration.",
+        btnQuiz2:"🧠 Take the Quiz", btnGames2:"🎮 Try the Games", btnSongs2:"🎵 Explore the Songs",
+        contactLine:"Questions or collab ideas? <a href='mailto:uraniachile@gmail.com' style='color: var(--cyan);'>uraniachile@gmail.com</a> — Follow us on <a href='https://www.youtube.com/@SensoryVerse' target='_blank' style='color: var(--cyan);'>YouTube</a>",
+        footer:"Created by Urania — © 2025 All rights reserved."
+      },
+      fr: {
+        metaTitle:"Bienvenue à SensoryVerse",
+        h1:"Bienvenue à SensoryVerse",
+        intro:"Conçu par une équipe d’astrophysiciens, neuroscientifiques, entrepreneurs, créateurs de jeux et experts en IA. Commencez par un court questionnaire pour cartographier votre « constellation » cognitive, puis explorez des micro-jeux — ou des morceaux de concentration inspirés des <strong>archétypes SensoryVerse</strong> — révélant attention, mémoire, flexibilité et équilibre sensoriel.",
+        btnQuiz:"🧠 Faire le Quiz",
+        btnGames:"🎮 Essayer les Jeux",
+        btnSongs:"🎵 Explorer les Morceaux",
+        btnScience:"🔬 La Science",
+        scienceTitle:"🔬 La science derrière SensoryVerse",
+        s1t:"Des « styles d’apprentissage » aux traits mesurables",
+        s1p1:"Les « styles d’apprentissage » furent populaires. Les preuves montrent qu’enseigner strictement selon un style ne garantit pas de meilleurs résultats.",
+        s1p2:"Ce qui compte : traits mesurables (rythme d’attention, préférence sensorielle, équilibre analytique–associatif, émotion). Les archétypes en sont une métaphore combinable.",
+        s2t:"Pourquoi c’est important",
+        s2p:"Plutôt que d’imposer un même cadre, nous adaptons l’environnement à l’apprenant — utile pour des profils divers et neuro-atypiques.",
+        s2l1:"Conception pédagogique : adapter représentations et rythme.",
+        s2l2:"Outils de focus : musique, rythme, rituels anti-distraction.",
+        s2l3:"Évaluation : observer l’adaptation sous charge, pas seulement le rappel.",
+        s3t:"Comment SensoryVerse s’informe",
+        s3l1:"Questionnaires sur attention, traitement et engagement.",
+        s3l2:"Micro-jeux : réaction, changement de règle, mémoire visuelle/verbale, tolérance sensorielle.",
+        s3p:"Accord auto-rapport/comportement = confiance ; divergence = pistes d’ajustement.",
+        s4t:"Axes de recherche",
+        s4l1:"Fiabilité de tâches brèves (attention/flexibilité/charge).",
+        s4l2:"Effet de l’adaptation (cadre/rythme) sur motivation et rétention.",
+        s4l3:"Données et méthodes ouvertes pour la reproductibilité.",
+        s5t:"Éthique & vie privée",
+        s5l1:"Données minimales : juste pour le retour et l’amélioration.",
+        s5l2:"Local-first : analyse dans votre navigateur si possible.",
+        s5l3:"Anonymisation : performance sans données personnelles.",
+        s5l4:"Consentement clair : participation à la recherche optionnelle.",
+        refsTitle:"📚 Références",
+        archTitle:"🧭 Archétypes d’apprentissage (combinables)",
+        archNote:"Des métaphores utiles ancrées dans des traits mesurables. La plupart combine 2–3 archétypes selon contexte et tâche.",
+        a1t:"Explorateur Visuel", a1p:"Apprend avec cartes, schémas et exemples.", a1f:"Suggestions : cartes mentales et graphiques interactifs.",
+        a2t:"Auditeur Rythmique", a2p:"Utilise rythme/voix pour structurer l’attention.", a2f:"Suggestions : repères auditifs et phasage.",
+        a3t:"Constructeur Spatial", a3p:"Raisonne avec modèles, blocs et 3D.", a3f:"Suggestions : puzzles spatiaux et simulations.",
+        a4t:"Analyste Séquentiel", a4p:"Étapes successives avec retour immédiat.", a4f:"Suggestions : checklists et mini-missions.",
+        a5t:"Rêveur Associatif", a5p:"Repère des analogies avec liberté créative.", a5f:"Suggestions : mixeur de stimuli et défis ouverts.",
+        a6t:"Conteur Symbolique", a6p:"Organise en histoires et symboles.", a6f:"Suggestions : missions narratives et rôles.",
+        a7t:"Collaborateur Social", a7p:"Apprend par dialogue et alternance de rôles.", a7f:"Suggestions : co-résolution et tours guidés.",
+        a8t:"Autonome Minimaliste", a8p:"Meilleur avec peu de distractions et auto-rythme.", a8f:"Suggestions : mode focus, UI épurée, pauses.",
+        ctaMix:"🔎 Trouvez votre mélange", ctaGames:"🎮 Entraînez-vous avec micro-jeux", ctaSongs:"🎵 Morceaux par archétype",
+        startTitle:"Commencez ici",
+        startText:"Faites le quiz, essayez les micro-jeux et explorez les morceaux de focus. Vos retours guident la suite.",
+        btnQuiz2:"🧠 Faire le Quiz", btnGames2:"🎮 Essayer les Jeux", btnSongs2:"🎵 Explorer les Morceaux",
+        contactLine:"Questions ou collaborations ? <a href='mailto:uraniachile@gmail.com' style='color: var(--cyan);'>uraniachile@gmail.com</a> — Suivez-nous sur <a href='https://www.youtube.com/@SensoryVerse' target='_blank' style='color: var(--cyan);'>YouTube</a>",
+        footer:"Créé par Urania — © 2025 Tous droits réservés."
+      }
+    };
+
+    // ===== Referencias (titulos en EN, traducción entre paréntesis para ES/FR) =====
+    const references = [
+      {
+        authors: "Pashler, H., McDaniel, M., Rohrer, D., & Bjork, R. (2008).",
+        title_en: "Learning styles: Concepts and evidence",
+        title_es: "Estilos de aprendizaje: conceptos y evidencia",
+        title_fr: "Styles d’apprentissage : concepts et preuves",
+        journal: "Psychological Science in the Public Interest, 9(3), 105–119.",
+        link: "https://journals.sagepub.com/doi/10.1111/j.1539-6053.2009.01038.x"
+      },
+      {
+        authors: "Kirschner, P. A. (2017).",
+        title_en: "Stop propagating the learning styles myth",
+        title_es: "Dejen de propagar el mito de los estilos de aprendizaje",
+        title_fr: "Cesser de propager le mythe des styles d’apprentissage",
+        journal: "Educational Psychologist, 52(2), 135–146.",
+        link: "https://doi.org/10.1007/s10648-017-9400-6"
+      },
+      {
+        authors: "Schneider, W., & Chein, J. M. (2003).",
+        title_en: "Controlled & automatic processing: Behavior, theory, and biological mechanisms",
+        title_es: "Procesamiento controlado y automático: conducta, teoría y mecanismos biológicos",
+        title_fr: "Traitement contrôlé et automatique : comportement, théorie et mécanismes biologiques",
+        journal: "Cognitive Science, 27(3), 525–559.",
+        link: "https://doi.org/10.3758/BF03195988"
+      },
+      {
+        authors: "D'Mello, S. K., & Graesser, A. C. (2012).",
+        title_en: "Dynamics of affective states during complex learning",
+        title_es: "Dinámica de los estados afectivos durante el aprendizaje complejo",
+        title_fr: "Dynamiques des états affectifs lors d’un apprentissage complexe",
+        journal: "Contemporary Educational Psychology, 37(2), 145–153.",
+        link: "https://doi.org/10.1016/j.cedpsych.2012.03.003"
+      },
+      {
+        authors: "Koedinger, K. R., Corbett, A. T., & Perfetti, C. (2012).",
+        title_en: "The knowledge-learning-instruction framework",
+        title_es: "El marco conocimiento–aprendizaje–instrucción",
+        title_fr: "Le cadre connaissance–apprentissage–enseignement",
+        journal: "Educational Psychologist, 47(2), 78–108.",
+        link: "https://doi.org/10.1007/s10648-012-9196-3"
+      }
+    ];
+
+    function renderRefs(lang='es'){
+      const ul = document.getElementById('refsList');
+      if(!ul) return;
+      ul.innerHTML = '';
+      references.forEach(ref => {
+        const li = document.createElement('li');
+        // Siempre mostrar el título EN; añadir traducción entre paréntesis si lang != 'en'
+        const translated = lang === 'en' ? '' :
+          (lang === 'es' ? ` (${ref.title_es})` : ` (${ref.title_fr})`);
+        li.innerHTML = `
+          ${ref.authors}
+          <a href="${ref.link}" target="_blank" rel="noopener">${ref.title_en}</a>${translated}.
+          <em>${ref.journal}</em>
+        `;
+        ul.appendChild(li);
+      });
+    }
+
+    // ===== Utilidad de traducción =====
+    const tEls = document.querySelectorAll('[data-t]');
+    function setLang(lang){
+      const pack = dict[lang] || dict.es;
+      tEls.forEach(el => {
+        const key = el.getAttribute('data-t');
+        if (!pack[key]) return;
+        if (pack[key].includes('<')) el.innerHTML = pack[key];
+        else el.textContent = pack[key];
+      });
+      document.documentElement.lang = lang;
+      document.title = pack.metaTitle || document.title;
+
+      // Marcar botón activo
+      document.querySelectorAll('.lang-btn').forEach(a => a.removeAttribute('aria-current'));
+      if(lang==='es') document.getElementById('btnES').setAttribute('aria-current','page');
+      if(lang==='en') document.getElementById('btnEN').setAttribute('aria-current','page');
+      if(lang==='fr') document.getElementById('btnFR').setAttribute('aria-current','page');
+
+      // Renderizar referencias con traducción entre paréntesis si corresponde
+      renderRefs(lang);
+    }
+
+    // Eventos de idioma
+    document.getElementById('btnES').addEventListener('click', e => {e.preventDefault(); setLang('es');});
+    document.getElementById('btnEN').addEventListener('click', e => {e.preventDefault(); setLang('en');});
+    document.getElementById('btnFR').addEventListener('click', e => {e.preventDefault(); setLang('fr');});
+
+    // Idioma inicial
+    setLang('es');
+  </script>
 </body>
 </html>

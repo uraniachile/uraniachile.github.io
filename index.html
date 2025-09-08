@@ -2,46 +2,80 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Urania</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-t="metaTitle">Urania</title>
   <link rel="icon" href="urania_logo.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Tipografías profesionales -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg1:#0a1a2f; --bg2:#000;
-      --ink:#fff; --muted:#cbd5e1;
-      --brand:#ffcc66; --panel:#02172c; --panel2:#001f3f;
-      --accent:#3dd2ff;
+      /* Paleta clara, corporativa */
+      --bg1:#f7f9fc; --bg2:#eef2f7;
+      --ink:#0f172a; --muted:#475569;
+      --brand:#0ea5b7;        /* turquesa pro */
+      --panel:#ffffff; --panel2:#ffffff;
+      --accent:#0ea5b7;
+      --border:#e5e7eb;
+      --shadow:rgba(2,6,23,.08);
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:'Quicksand',sans-serif;
+      font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--ink);
       background: radial-gradient(ellipse at 30% 10%, var(--bg1), var(--bg2));
       text-align:center;
     }
+    a{ color:var(--accent); text-decoration:none }
+    a:hover{ text-decoration:underline }
 
     /* Top bar */
     header{
       background:var(--panel2);
-      padding:1.25rem 1rem;
-      box-shadow:0 6px 16px rgba(0,0,0,.35);
-      display:flex; align-items:center; justify-content:center; gap:.75rem;
+      padding:.75rem 1rem;
+      box-shadow:0 8px 22px var(--shadow);
+      border-bottom:1px solid var(--border);
+      position:sticky; top:0; z-index:10;
     }
-    header .brand-img{
-      width:64px; height:64px; object-fit:contain; border-radius:12px;
-      filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));
+    .header-inner{
+      max-width:1100px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between; gap:.75rem;
     }
-    header .brand-title{ font-size:1.75rem; margin:0; letter-spacing:.5px }
+    .brand{
+      display:flex; align-items:center; gap:.6rem;
+    }
+    .brand-img{
+      width:48px; height:48px; object-fit:contain; border-radius:10px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,.12));
+    }
+    .brand-title{
+      font-family:'Playfair Display', Georgia, serif;
+      font-size:1.75rem; margin:0; letter-spacing:.2px;
+    }
+
+    /* Switcher de idioma */
+    .language-switcher{ display:flex; gap:.4rem; align-items:center }
+    .lang-btn{
+      display:inline-flex; align-items:center; gap:.35rem;
+      background:#f1f5f9; color:#0f172a; border:1px solid var(--border);
+      padding:.35rem .6rem; border-radius:999px; font-weight:600; font-size:.85rem;
+      box-shadow:0 2px 8px var(--shadow);
+    }
+    .lang-btn[aria-current="page"]{
+      background:var(--accent); color:#fff; border-color:transparent;
+      box-shadow:0 4px 10px rgba(14,165,183,.25);
+      cursor:default;
+    }
 
     main{ padding:2rem 1rem 4rem }
 
     /* Sección: ¿Qué es Urania? */
     .about{
       max-width:1100px; margin:0 auto 2rem; text-align:left;
-      background:linear-gradient(180deg,#071628 0%, #03111f 100%);
-      border:1px solid #17324f; border-radius:16px; padding:1.25rem 1.25rem 1rem;
+      background:var(--panel);
+      border:1px solid var(--border); border-radius:16px; padding:1.25rem 1.25rem 1rem;
+      box-shadow:0 10px 28px var(--shadow);
     }
     .about h1{ margin:.25rem 0 .35rem; font-size:2rem; text-align:center }
     .about p.lead{ color:var(--muted); margin:.25rem auto 1rem; max-width:950px; text-align:center }
@@ -49,7 +83,8 @@
       display:grid; grid-template-columns:repeat(12,1fr); gap:.9rem; margin-top:.5rem;
     }
     .pillar{
-      grid-column:span 12; background:#041225; border:1px solid #1b3250; border-radius:14px; padding:.85rem 1rem;
+      grid-column:span 12; background:#fff; border:1px solid var(--border); border-radius:14px; padding:.85rem 1rem;
+      box-shadow:0 6px 20px var(--shadow);
     }
     .pillar h3{ margin:.1rem 0 .3rem; font-size:1.1rem }
     .pillar p{ margin:0; color:var(--muted) }
@@ -57,30 +92,38 @@
       .pillar{ grid-column:span 4 }
     }
 
-    /* Hero SensoryVerse */
+    /* HERO: SensoryVerse */
     .hero{
       max-width:1100px; margin:1.75rem auto 0; padding:2rem 1rem 0;
       display:grid; grid-template-columns:1fr; gap:1.5rem;
     }
     .sv-logo{
       width:120px; height:120px; object-fit:contain; border-radius:18px;
-      background:#fff1; padding:.5rem; margin:0 auto .5rem; border:2px solid #ffffff22;
+      background:#fff; padding:.5rem; margin:0 auto .5rem; border:1px solid var(--border);
+      box-shadow:0 6px 18px var(--shadow);
     }
-    .hero h2{ font-size:2.4rem; margin:.25rem 0 .35rem }
+    .hero h2{
+      font-family:'Playfair Display', Georgia, serif;
+      font-size:2.2rem; margin:.25rem 0 .35rem
+    }
     .hero p.lead{
-      max-width:880px; margin:.25rem auto 1.25rem; color:var(--muted); font-size:1.15rem;
+      max-width:880px; margin:.25rem auto 1.25rem; color:var(--muted); font-size:1.12rem;
     }
     .btn-row{ display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap }
     .btn{
-      background:var(--accent); color:#002233; border:none; border-radius:10px;
+      background:var(--accent); color:#ffffff; border:1px solid transparent; border-radius:10px;
       padding:.8rem 1.15rem; font-weight:700; cursor:pointer; text-decoration:none;
-      box-shadow:0 6px 18px rgba(61,210,255,.25);
+      box-shadow:0 6px 18px rgba(14,165,183,.25);
     }
-    .btn.alt{ background:#13395a; color:#e6f6ff; box-shadow:none; border:1px solid #1f4d76 }
+    .btn:hover{ filter:brightness(.95) }
+    .btn.alt{
+      background:#ffffff; color:var(--ink); box-shadow:0 2px 10px var(--shadow);
+      border:1px solid var(--border)
+    }
     .chip{
-      display:inline-block; padding:.25rem .6rem; border:1px solid #365a80;
-      border-radius:999px; color:#cfe9ff; font-size:.85rem; margin:.15rem .25rem;
-      background:#0b2744;
+      display:inline-block; padding:.25rem .6rem; border:1px solid var(--border);
+      border-radius:999px; color:#0f172a; font-size:.85rem; margin:.15rem .25rem;
+      background:#f8fafc;
     }
 
     /* Feature cards */
@@ -89,9 +132,9 @@
       grid-template-columns:repeat(12,1fr); gap:1rem;
     }
     .card{
-      grid-column:span 12; background:linear-gradient(180deg,#071628 0%, #03111f 100%);
-      border:1px solid #19304b; border-radius:16px; padding:1.1rem 1.1rem;
-      text-align:left;
+      grid-column:span 12; background:var(--panel);
+      border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.1rem;
+      text-align:left; box-shadow:0 10px 28px var(--shadow);
     }
     .card h3{ margin:.3rem 0 .4rem; font-size:1.25rem }
     .card p{ margin:.25rem 0 0; color:var(--muted) }
@@ -106,12 +149,14 @@
       max-width:1100px; margin:2rem auto 0; display:grid;
       grid-template-columns:repeat(12,1fr); gap:1rem; text-align:left;
     }
-    .step{ grid-column:span 12; background:#041225; border:1px solid #1b3250; border-radius:14px; padding:1rem }
-    .step h4{ margin:.2rem 0 .45rem; font-size:1.1rem }
+    .step{ grid-column:span 12; background:#fff; border:1px solid var(--border); border-radius:14px; padding:1rem;
+      box-shadow:0 6px 20px var(--shadow);
+    }
+    .step h4{ margin:.2rem 0 .45rem; font-size:1.08rem }
     .num{
       display:inline-flex; align-items:center; justify-content:center;
-      width:26px; height:26px; border-radius:50%; background:#0b2e52; color:#aee3ff;
-      border:1px solid #1d4a74; font-size:.9rem; margin-right:.45rem;
+      width:26px; height:26px; border-radius:50%; background:#e6f9fc; color:#036b7a;
+      border:1px solid #c4eef4; font-size:.9rem; margin-right:.45rem;
     }
     .step p{ margin:0; color:var(--muted) }
     @media (min-width:760px){
@@ -122,54 +167,76 @@
     .other{
       max-width:1100px; margin:3rem auto 0; text-align:left;
     }
-    .other h2{ text-align:center; margin-bottom:1rem }
+    .other h2{
+      text-align:center; margin-bottom:1rem;
+      font-family:'Playfair Display', Georgia, serif;
+    }
     .op-grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:1rem }
     .op-card{
-      grid-column:span 12; background:#061427; border:1px solid #19304b; border-radius:14px; padding:1rem 1.2rem;
+      grid-column:span 12; background:#fff; border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem;
+      box-shadow:0 6px 20px var(--shadow);
     }
     .op-card h3{ margin:.2rem 0 .35rem }
     .op-card p{ margin:.2rem 0 .6rem; color:var(--muted) }
-    .op-card a{ color:var(--brand); text-decoration:none; font-weight:700 }
+    .op-card a{ font-weight:700 }
     @media (min-width:760px){ .op-card{ grid-column:span 6 } }
 
     footer{
-      background:#001627; padding:1.25rem; margin-top:3rem; font-size:.9rem; color:#94a3b8;
+      background:#ffffff; padding:1.25rem; margin-top:3rem; font-size:.95rem; color:#64748b;
+      border-top:1px solid var(--border);
     }
     .foot-brand{ display:flex; align-items:center; justify-content:center; gap:.5rem; margin-bottom:.35rem }
     .foot-brand img{ width:42px; height:42px; object-fit:contain; border-radius:10px }
-    a{ color:var(--brand); text-decoration:none }
+    .foot-brand strong{ color:#0f172a }
+
+    /* Móvil */
+    @media (max-width:600px){
+      .brand-title{ font-size:1.5rem }
+      .lang-btn{ padding:.3rem .5rem; font-size:.8rem }
+      .sv-logo{ width:100px; height:100px }
+    }
   </style>
 </head>
 <body>
   <!-- Top bar -->
   <header>
-    <img class="brand-img" src="urania_logo.png" alt="Logo Urania" width="64" height="64">
-    <h1 class="brand-title">Urania</h1>
+    <div class="header-inner">
+      <div class="brand">
+        <img class="brand-img" src="urania_logo.png" alt="Logo Urania" width="48" height="48">
+        <h1 class="brand-title">Urania</h1>
+      </div>
+
+      <!-- Switcher de idioma -->
+      <nav class="language-switcher" aria-label="Selector de idioma">
+        <a href="#" class="lang-btn" id="btnES" aria-current="page">🇪🇸 ES</a>
+        <a href="#" class="lang-btn" id="btnEN">🇬🇧 EN</a>
+        <a href="#" class="lang-btn" id="btnFR">🇫🇷 FR</a>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <!-- NUEVO: ¿Qué es Urania? -->
+    <!-- ¿Qué es Urania? -->
     <section class="about" id="about">
-      <h1>¿Qué es Urania?</h1>
-      <p class="lead">
+      <h1 data-t="aboutTitle">¿Qué es Urania?</h1>
+      <p class="lead" data-t="aboutLead">
         Urania es un <strong>laboratorio creativo</strong> donde ciencia, arte y tecnología se encuentran
-        para diseñar <strong>experiencias inmersivas</strong> de aprendizaje y cultura.
-        Creamos herramientas y obras que traducen conceptos complejos en formas
-        <em>sentibles</em>: sonido, visual, juego y narrativa.
+        para diseñar <strong>experiencias inmersivas</strong> de aprendizaje y cultura. Creamos herramientas y obras que
+        traducen conceptos complejos en formas <em>sentibles</em>: sonido, visual, juego y narrativa.
       </p>
 
       <div class="pillars">
         <div class="pillar">
-          <h3>🔭 Ciencia</h3>
-          <p>Divulgación rigurosa y amable: astronomía, física, neurociencia y datos transformados en experiencias.</p>
+          <h3 data-t="p1Title">🔭 Ciencia</h3>
+          <p data-t="p1Text">Divulgación rigurosa y amable: astronomía, física, neurociencia y datos transformados en experiencias.</p>
         </div>
         <div class="pillar">
-          <h3>🎨 Arte</h3>
-          <p>Estética y emoción como puente cognitivo: composiciones sonoras, visuales en vivo y performance.</p>
+          <h3 data-t="p2Title">🎨 Arte</h3>
+          <p data-t="p2Text">Estética y emoción como puente cognitivo: composiciones sonoras, visuales en vivo y performance.</p>
         </div>
         <div class="pillar">
-          <h3>💡 Tecnología & Accesibilidad</h3>
-          <p>Interfaces simples, métricas transparentes y materiales abiertos para educación, museos y comunidades.</p>
+          <h3 data-t="p3Title">💡 Tecnología & Accesibilidad</h3>
+          <p data-t="p3Text">Interfaces simples, métricas transparentes y materiales abiertos para educación, museos y comunidades.</p>
         </div>
       </div>
     </section>
@@ -177,90 +244,90 @@
     <!-- HERO: SensoryVerse -->
     <section class="hero" id="sensoryverse">
       <img class="sv-logo" src="SensoryVerse.png" alt="SensoryVerse Logo" />
-      <h2>SensoryVerse</h2>
-      <p class="lead">
+      <h2 data-t="svTitle">SensoryVerse</h2>
+      <p class="lead" data-t="svLead">
         Nuestro proyecto principal: un laboratorio <strong>multisensorial</strong> que convierte ideas en experiencias.
         Sonidos, visuales y narrativa interactiva impulsadas por IA para <strong>aprender, explorar y crear</strong>.
       </p>
       <div class="btn-row">
-        <a class="btn" href="sensoryverse.html" target="_blank" rel="noopener">Explorar demo</a>
-        <a class="btn alt" href="#features">Ver características</a>
+        <a class="btn" href="sensoryverse.html" target="_blank" rel="noopener" data-t="svBtnDemo">Explorar demo</a>
+        <a class="btn alt" href="#features" data-t="svBtnFeatures">Ver características</a>
       </div>
       <div style="margin-top:.75rem">
-        <span class="chip">Audio reactivo</span>
-        <span class="chip">Visuales en vivo</span>
-        <span class="chip">Juegos cognitivos</span>
-        <span class="chip">Storytelling adaptativo</span>
+        <span class="chip" data-t="chip1">Audio reactivo</span>
+        <span class="chip" data-t="chip2">Visuales en vivo</span>
+        <span class="chip" data-t="chip3">Juegos cognitivos</span>
+        <span class="chip" data-t="chip4">Storytelling adaptativo</span>
       </div>
     </section>
 
     <!-- Features -->
     <section id="features" class="features">
       <article class="card span-4">
-        <h3><span class="emoji">🎧</span> Audio + Percepción</h3>
-        <p>Capas sonoras dinámicas que guían la atención y miden foco, reacción y adaptación.</p>
+        <h3><span class="emoji">🎧</span><span data-t="f1Title"> Audio + Percepción</span></h3>
+        <p data-t="f1Text">Capas sonoras dinámicas que guían la atención y miden foco, reacción y adaptación.</p>
       </article>
       <article class="card span-4">
-        <h3><span class="emoji">🖼️</span> Visuales Interactivos</h3>
-        <p>Gráficos reactivos que cambian con tu respuesta y con la narrativa del ejercicio.</p>
+        <h3><span class="emoji">🖼️</span><span data-t="f2Title"> Visuales Interactivos</span></h3>
+        <p data-t="f2Text">Gráficos reactivos que cambian con tu respuesta y con la narrativa del ejercicio.</p>
       </article>
       <article class="card span-4">
-        <h3><span class="emoji">🧠</span> Juegos Cognitivos</h3>
-        <p>Mini-experimentos (memoria, flexibilidad, sobre-estimulación) con resúmenes inmediatos.</p>
+        <h3><span class="emoji">🧠</span><span data-t="f3Title"> Juegos Cognitivos</span></h3>
+        <p data-t="f3Text">Mini-experimentos (memoria, flexibilidad, sobre-estimulación) con resúmenes inmediatos.</p>
       </article>
 
       <article class="card span-6">
-        <h3><span class="emoji">⚙️</span> Personalización en segundos</h3>
-        <p>Elige un concepto y SensoryVerse lo traduce a paletas, ritmos y reglas de interacción.</p>
+        <h3><span class="emoji">⚙️</span><span data-t="f4Title"> Personalización en segundos</span></h3>
+        <p data-t="f4Text">Elige un concepto y SensoryVerse lo traduce a paletas, ritmos y reglas de interacción.</p>
       </article>
       <article class="card span-6">
-        <h3><span class="emoji">📊</span> Métricas claras</h3>
-        <p>Tiempo de reacción, precisión y gráficos ASCII minimalistas para revisar sin distracción.</p>
+        <h3><span class="emoji">📊</span><span data-t="f5Title"> Métricas claras</span></h3>
+        <p data-t="f5Text">Tiempo de reacción, precisión y gráficos ASCII minimalistas para revisar sin distracción.</p>
       </article>
     </section>
 
     <!-- Cómo funciona -->
     <section class="steps">
       <div class="step">
-        <h4><span class="num">1</span> Define el concepto</h4>
-        <p>Escoge un tema (p.ej., “ondas gravitacionales”) o una emoción a explorar.</p>
+        <h4><span class="num">1</span><span data-t="s1Title"> Define el concepto</span></h4>
+        <p data-t="s1Text">Escoge un tema (p.ej., “ondas gravitacionales”) o una emoción a explorar.</p>
       </div>
       <div class="step">
-        <h4><span class="num">2</span> Genera la experiencia</h4>
-        <p>IA crea la partitura sensorial: reglas de foco, visuales y juego asociado.</p>
+        <h4><span class="num">2</span><span data-t="s2Title"> Genera la experiencia</span></h4>
+        <p data-t="s2Text">IA crea la partitura sensorial: reglas de foco, visuales y juego asociado.</p>
       </div>
       <div class="step">
-        <h4><span class="num">3</span> Interactúa y mide</h4>
-        <p>Juega, responde y observa métricas: precisión, RT y evolución por regla.</p>
+        <h4><span class="num">3</span><span data-t="s3Title"> Interactúa y mide</span></h4>
+        <p data-t="s3Text">Juega, responde y observa métricas: precisión, RT y evolución por regla.</p>
       </div>
       <div class="step">
-        <h4><span class="num">4</span> Itera y comparte</h4>
-        <p>Ajusta parámetros y guarda sesiones para docencia, museo o performance.</p>
+        <h4><span class="num">4</span><span data-t="s4Title"> Itera y comparte</span></h4>
+        <p data-t="s4Text">Ajusta parámetros y guarda sesiones para docencia, museo o performance.</p>
       </div>
     </section>
 
     <!-- CTA -->
     <section style="margin-top:2rem">
       <div class="btn-row">
-        <a class="btn" href="sensoryverse.html" target="_blank" rel="noopener">Probar SensoryVerse ahora</a>
-        <a class="btn alt" href="#otros">Ver otros proyectos</a>
+        <a class="btn" href="sensoryverse.html" target="_blank" rel="noopener" data-t="ctaTry">Probar SensoryVerse ahora</a>
+        <a class="btn alt" href="#otros" data-t="ctaOthers">Ver otros proyectos</a>
       </div>
     </section>
 
     <!-- Otros proyectos -->
     <section id="otros" class="other">
-      <h2>Otros proyectos</h2>
+      <h2 data-t="othersTitle">Otros proyectos</h2>
       <div class="op-grid">
         <article class="op-card">
-          <h3>🌀 Cosmovisiones</h3>
-          <p>Lazos entre astronomía y sabidurías ancestrales: exhibiciones, performance y talleres que celebran la diversidad cultural del universo.</p>
-          <a href="#" onclick="alert('Página en desarrollo');return false;">Ver más</a>
+          <h3 data-t="op1Title">🌀 Cosmovisiones</h3>
+          <p data-t="op1Text">Lazos entre astronomía y sabidurías ancestrales: exhibiciones, performance y talleres que celebran la diversidad cultural del universo.</p>
+          <a href="#" onclick="alert(msgDev);return false;" data-t="opMore">Ver más</a>
         </article>
 
         <article class="op-card">
-          <h3>🥞 Cocina tu Propio Universo</h3>
-          <p>Aprende cosmología cocinando: inflación, nucleosíntesis y materia oscura, todo traducido a texturas, tiempos y sabores.</p>
-          <a href="#" onclick="alert('Página en desarrollo');return false;">Ver más</a>
+          <h3 data-t="op2Title">🥞 Cocina tu Propio Universo</h3>
+          <p data-t="op2Text">Aprende cosmología cocinando: inflación, nucleosíntesis y materia oscura, todo traducido a texturas, tiempos y sabores.</p>
+          <a href="#" onclick="alert(msgDev);return false;" data-t="opMore2">Ver más</a>
         </article>
       </div>
     </section>
@@ -273,7 +340,217 @@
       </a>
       <strong>Urania</strong>
     </div>
-    <div>&copy; 2025 Urania. Diseñado por Sofia Gallego. Sitio en desarrollo.</div>
+    <div data-t="footerLine">&copy; 2025 Urania. Diseñado por Sofia Gallego. Sitio en desarrollo.</div>
   </footer>
+
+  <script>
+    // Mensaje para links "en desarrollo"
+    let msgDev = 'Página en desarrollo';
+
+    // Diccionario ES/EN/FR
+    const dict = {
+      es: {
+        metaTitle:"Urania",
+        aboutTitle:"¿Qué es Urania?",
+        aboutLead:"Urania es un <strong>laboratorio creativo</strong> donde ciencia, arte y tecnología se encuentran para diseñar <strong>experiencias inmersivas</strong> de aprendizaje y cultura. Creamos herramientas y obras que traducen conceptos complejos en formas <em>sentibles</em>: sonido, visual, juego y narrativa.",
+        p1Title:"🔭 Ciencia",
+        p1Text:"Divulgación rigurosa y amable: astronomía, física, neurociencia y datos transformados en experiencias.",
+        p2Title:"🎨 Arte",
+        p2Text:"Estética y emoción como puente cognitivo: composiciones sonoras, visuales en vivo y performance.",
+        p3Title:"💡 Tecnología & Accesibilidad",
+        p3Text:"Interfaces simples, métricas transparentes y materiales abiertos para educación, museos y comunidades.",
+
+        svTitle:"SensoryVerse",
+        svLead:"Nuestro proyecto principal: un laboratorio <strong>multisensorial</strong> que convierte ideas en experiencias. Sonidos, visuales y narrativa interactiva impulsadas por IA para <strong>aprender, explorar y crear</strong>.",
+        svBtnDemo:"Explorar demo",
+        svBtnFeatures:"Ver características",
+        chip1:"Audio reactivo",
+        chip2:"Visuales en vivo",
+        chip3:"Juegos cognitivos",
+        chip4:"Storytelling adaptativo",
+
+        f1Title:" Audio + Percepción",
+        f1Text:"Capas sonoras dinámicas que guían la atención y miden foco, reacción y adaptación.",
+        f2Title:" Visuales Interactivos",
+        f2Text:"Gráficos reactivos que cambian con tu respuesta y con la narrativa del ejercicio.",
+        f3Title:" Juegos Cognitivos",
+        f3Text:"Mini-experimentos (memoria, flexibilidad, sobre-estimulación) con resúmenes inmediatos.",
+        f4Title:" Personalización en segundos",
+        f4Text:"Elige un concepto y SensoryVerse lo traduce a paletas, ritmos y reglas de interacción.",
+        f5Title:" Métricas claras",
+        f5Text:"Tiempo de reacción, precisión y gráficos ASCII minimalistas para revisar sin distracción.",
+
+        s1Title:" Define el concepto",
+        s1Text:"Escoge un tema (p.ej., “ondas gravitacionales”) o una emoción a explorar.",
+        s2Title:" Genera la experiencia",
+        s2Text:"IA crea la partitura sensorial: reglas de foco, visuales y juego asociado.",
+        s3Title:" Interactúa y mide",
+        s3Text:"Juega, responde y observa métricas: precisión, RT y evolución por regla.",
+        s4Title:" Itera y comparte",
+        s4Text:"Ajusta parámetros y guarda sesiones para docencia, museo o performance.",
+
+        ctaTry:"Probar SensoryVerse ahora",
+        ctaOthers:"Ver otros proyectos",
+
+        othersTitle:"Otros proyectos",
+        op1Title:"🌀 Cosmovisiones",
+        op1Text:"Lazos entre astronomía y sabidurías ancestrales: exhibiciones, performance y talleres que celebran la diversidad cultural del universo.",
+        opMore:"Ver más",
+        op2Title:"🥞 Cocina tu Propio Universo",
+        op2Text:"Aprende cosmología cocinando: inflación, nucleosíntesis y materia oscura, todo traducido a texturas, tiempos y sabores.",
+        opMore2:"Ver más",
+
+        footerLine:"© 2025 Urania. Diseñado por Sofia Gallego. Sitio en desarrollo."
+      },
+      en: {
+        metaTitle:"Urania",
+        aboutTitle:"What is Urania?",
+        aboutLead:"Urania is a <strong>creative lab</strong> where science, art and technology meet to design <strong>immersive learning</strong> and cultural experiences. We turn complex concepts into <em>felt</em> forms: sound, visuals, play and narrative.",
+        p1Title:"🔭 Science",
+        p1Text:"Friendly, rigorous outreach: astronomy, physics, neuroscience and data turned into experiences.",
+        p2Title:"🎨 Art",
+        p2Text:"Aesthetics and emotion as a cognitive bridge: sound compositions, live visuals and performance.",
+        p3Title:"💡 Technology & Accessibility",
+        p3Text:"Simple interfaces, transparent metrics and open materials for education, museums and communities.",
+
+        svTitle:"SensoryVerse",
+        svLead:"Our flagship: a <strong>multi-sensory</strong> lab that turns ideas into experiences. AI-driven sound, visuals and interactive narrative to <strong>learn, explore and create</strong>.",
+        svBtnDemo:"Explore demo",
+        svBtnFeatures:"See features",
+        chip1:"Reactive audio",
+        chip2:"Live visuals",
+        chip3:"Cognitive games",
+        chip4:"Adaptive storytelling",
+
+        f1Title:" Audio + Perception",
+        f1Text:"Dynamic sound layers guiding attention and measuring focus, reaction and adaptation.",
+        f2Title:" Interactive Visuals",
+        f2Text:"Reactive graphics that evolve with your responses and the narrative.",
+        f3Title:" Cognitive Games",
+        f3Text:"Micro-experiments (memory, flexibility, over-stimulation) with instant summaries.",
+        f4Title:" Personalization in seconds",
+        f4Text:"Pick a concept and SensoryVerse maps it to palettes, rhythms and interaction rules.",
+        f5Title:" Clear metrics",
+        f5Text:"Reaction time, accuracy and minimal ASCII charts for distraction-free review.",
+
+        s1Title:" Define the concept",
+        s1Text:"Choose a topic (e.g., “gravitational waves”) or an emotion to explore.",
+        s2Title:" Generate the experience",
+        s2Text:"AI builds the sensory score: focus rules, visuals and associated play.",
+        s3Title:" Interact & measure",
+        s3Text:"Play, respond and track metrics: accuracy, RT and rule-by-rule evolution.",
+        s4Title:" Iterate & share",
+        s4Text:"Tune parameters and save sessions for teaching, museums or performance.",
+
+        ctaTry:"Try SensoryVerse now",
+        ctaOthers:"See other projects",
+
+        othersTitle:"Other projects",
+        op1Title:"🌀 Cosmovisions",
+        op1Text:"Bridges between astronomy and ancestral wisdom: exhibitions, performance and workshops.",
+        opMore:"Learn more",
+        op2Title:"🥞 Cook Your Own Universe",
+        op2Text:"Learn cosmology by cooking: inflation, nucleosynthesis and dark matter turned into textures, timing and flavor.",
+        opMore2:"Learn more",
+
+        footerLine:"© 2025 Urania. Designed by Sofia Gallego. Site in progress."
+      },
+      fr: {
+        metaTitle:"Urania",
+        aboutTitle:"Qu’est-ce que Urania ?",
+        aboutLead:"Urania est un <strong>laboratoire créatif</strong> où science, art et technologie se rencontrent pour concevoir des expériences <strong>immersives d’apprentissage</strong> et de culture. Nous traduisons des concepts complexes en formes <em>sensibles</em> : son, visuel, jeu et narration.",
+        p1Title:"🔭 Science",
+        p1Text:"Médiation scientifique exigeante et bienveillante : astronomie, physique, neurosciences et données transformées en expériences.",
+        p2Title:"🎨 Art",
+        p2Text:"Esthétique et émotion comme pont cognitif : compositions sonores, visuels live et performance.",
+        p3Title:"💡 Technologie & Accessibilité",
+        p3Text:"Interfaces simples, métriques transparentes et ressources ouvertes pour l’éducation, les musées et les communautés.",
+
+        svTitle:"SensoryVerse",
+        svLead:"Notre projet phare : un laboratoire <strong>multi-sensoriel</strong> qui transforme les idées en expériences. Son, visuels et narration interactive propulsés par l’IA pour <strong>apprendre, explorer et créer</strong>.",
+        svBtnDemo:"Découvrir la démo",
+        svBtnFeatures:"Voir les fonctionnalités",
+        chip1:"Audio réactif",
+        chip2:"Visuels en direct",
+        chip3:"Jeux cognitifs",
+        chip4:"Narration adaptative",
+
+        f1Title:" Audio + Perception",
+        f1Text:"Couches sonores dynamiques guidant l’attention et mesurant focus, réaction et adaptation.",
+        f2Title:" Visuels interactifs",
+        f2Text:"Graphiques réactifs qui évoluent avec vos réponses et la narration.",
+        f3Title:" Jeux cognitifs",
+        f3Text:"Micro-expériences (mémoire, flexibilité, sur-stimulation) avec synthèses immédiates.",
+        f4Title:" Personnalisation en quelques secondes",
+        f4Text:"Choisissez un concept et SensoryVerse le traduit en palettes, rythmes et règles d’interaction.",
+        f5Title:" Indicateurs clairs",
+        f5Text:"Temps de réaction, précision et graphiques ASCII minimalistes pour un examen sans distraction.",
+
+        s1Title:" Définir le concept",
+        s1Text:"Choisissez un thème (ex. « ondes gravitationnelles ») ou une émotion à explorer.",
+        s2Title:" Générer l’expérience",
+        s2Text:"L’IA compose la partition sensorielle : règles d’attention, visuels et jeu associé.",
+        s3Title:" Interagir et mesurer",
+        s3Text:"Jouez, répondez et observez les métriques : précision, TR et évolution par règle.",
+        s4Title:" Itérer et partager",
+        s4Text:"Ajustez les paramètres et enregistrez des sessions pour l’enseignement, le musée ou la performance.",
+
+        ctaTry:"Essayer SensoryVerse",
+        ctaOthers:"Voir d’autres projets",
+
+        othersTitle:"Autres projets",
+        op1Title:"🌀 Cosmovisions",
+        op1Text:"Liens entre astronomie et sagesses ancestrales : expositions, performances et ateliers.",
+        opMore:"En savoir plus",
+        op2Title:"🥞 Cuisinez votre propre univers",
+        op2Text:"Apprenez la cosmologie en cuisinant : inflation, nucléosynthèse et matière noire traduites en textures, temps et saveurs.",
+        opMore2:"En savoir plus",
+
+        footerLine:"© 2025 Urania. Conception : Sofia Gallego. Site en cours."
+      }
+    };
+
+    const tEls = document.querySelectorAll('[data-t]');
+
+    function setLang(lang){
+      const pack = dict[lang] || dict.es;
+      // Aplicar textos
+      tEls.forEach(el => {
+        const key = el.getAttribute('data-t');
+        if (!pack[key]) return;
+        // Si contiene HTML enriquecido
+        if (pack[key].includes('<')) el.innerHTML = pack[key];
+        else el.textContent = pack[key];
+      });
+      // Document lang + title
+      document.documentElement.lang = lang;
+      document.title = pack.metaTitle || document.title;
+
+      // mensaje de “en desarrollo”
+      msgDev = (lang==='en') ? 'Page under construction'
+             : (lang==='fr') ? 'Page en cours'
+             : 'Página en desarrollo';
+
+      // Botón activo
+      document.querySelectorAll('.lang-btn').forEach(a => a.removeAttribute('aria-current'));
+      if(lang==='es') document.getElementById('btnES').setAttribute('aria-current','page');
+      if(lang==='en') document.getElementById('btnEN').setAttribute('aria-current','page');
+      if(lang==='fr') document.getElementById('btnFR').setAttribute('aria-current','page');
+
+      // Persistir preferencia
+      try{ localStorage.setItem('urania_lang', lang); }catch{}
+    }
+
+    // Eventos de idioma
+    document.getElementById('btnES').addEventListener('click', e => {e.preventDefault(); setLang('es');});
+    document.getElementById('btnEN').addEventListener('click', e => {e.preventDefault(); setLang('en');});
+    document.getElementById('btnFR').addEventListener('click', e => {e.preventDefault(); setLang('fr');});
+
+    // Cargar preferencia o ES
+    const saved = (()=>{
+      try{ return localStorage.getItem('urania_lang'); }catch{ return null }
+    })();
+    setLang(saved || 'es');
+  </script>
 </body>
 </html>

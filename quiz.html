@@ -50,50 +50,68 @@
       height: 12px;
       margin-bottom: 1rem;
     }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #00f2ff;
-      transition: width 0.3s ease;
-    }
+    .progress-bar { height: 100%; width: 0%; background: #00f2ff; transition: width 0.3s ease; }
     ul { text-align: left; }
-    footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #888;
-      padding: 1rem 0;
-    }
-    #questionBlock {
-      min-width: 400px;
-      max-width: 400px;
-      max-height: 200px;
-      min-height: 200px;
-    }
+    footer { text-align: center; font-size: 0.8rem; color: #888; padding: 1rem 0; }
+    #questionBlock { min-width: 400px; max-width: 400px; max-height: 200px; min-height: 200px; }
+
+    /* === Switcher de idioma (compacto) === */
+.language-switcher{
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + .5rem);
+  right: .5rem;
+  display: flex;
+  gap: .4rem;
+  z-index: 9999;          /* evita que algo lo tape */
+  pointer-events: auto;
+}
+
+.lang-btn{
+  background:#00f2ff; color:#000; border:0; cursor:pointer;
+  padding:.35rem .6rem; border-radius:9px; font-weight:700; font-size:.85rem; line-height:1;
+  box-shadow:0 0 8px #00f2ff33; text-decoration:none;
+}
+.lang-btn:hover{ background:#00c2cc }
+.lang-btn[aria-current="page"]{ filter:brightness(.9); box-shadow:0 0 0 2px #fff inset }
+
+/* Opcional: aún más compacto en pantallas muy pequeñas */
+@media (max-width:420px){
+  .lang-btn{ padding:.3rem .5rem; font-size:.8rem }
+}
+
   </style>
 </head>
 <body>
+
+  <!-- Selector de idioma -->
+  <nav class="language-switcher" aria-label="Selector de idioma">
+    <button class="lang-btn" data-lang="es" aria-current="page">ES</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+  </nav>
+
   <div class="container">
     <div id="intro">
-      <img src="SensoryVerse.png" alt="Logo de SensoryVerse" class="logo">
-      <h2>Bienvenido/a al Cuestionario de Personalidad de SensoryVerse</h2>
+      <center><a href="sensoryverse.html" target="_blank"><img src="SensoryVerse.png" alt="Logo SensoryVerse" class="logo" /></a></center>
+      <h2 id="introTitle">Bienvenido/a al Cuestionario de Personalidad de SensoryVerse</h2>
 
-      <p>El <strong>Cuestionario SensoryVerse</strong> es un recorrido de 8 preguntas que explora cómo procesas la información, centras la atención y te adaptas a los retos.  
-      Cada respuesta construye tu “constelación cognitiva” — un perfil que refleja tus preferencias naturales de aprendizaje.  
-      Al final, recibirás <strong>ideas personalizadas</strong> y <strong>consejos prácticos</strong> que puedes aplicar de inmediato para estudiar, trabajar o crear.</p>
+      <p id="introP">
+        El <strong>Cuestionario SensoryVerse</strong> es un recorrido de 8 preguntas que explora cómo procesas la información, centras la atención y te adaptas a los retos.
+        Cada respuesta construye tu “constelación cognitiva” — un perfil que refleja tus preferencias naturales de aprendizaje.
+        Al final, recibirás <strong>ideas personalizadas</strong> y <strong>consejos prácticos</strong> que puedes aplicar de inmediato para estudiar, trabajar o crear.
+      </p>
 
       <button id="beginBtn">Empezar</button>
     </div>
 
     <div id="quiz" style="display:none;">
-      <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
+      <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 
       <div id="questionBlock" style="min-height: 280px;">
         <div class="question" id="question"></div>
         <div class="insight" id="insight"></div>
         <details>
-          <summary>¿Dudas? Pulsa para ver ejemplos</summary>
+          <summary id="exampleSummary">¿Dudas? Pulsa para ver ejemplos</summary>
           <div id="exampleText"></div>
         </details>
       </div>
@@ -104,8 +122,8 @@
           <span>A</span><span>B</span>
         </div>
       </div>
-      <button onclick="answer()">Siguiente</button>
-      <button onclick="goBack()">←</button>
+      <button id="nextBtn" onclick="answer()">Siguiente</button>
+      <button id="backBtn" onclick="goBack()">←</button>
     </div>
 
     <div id="result" style="display:none;">
@@ -113,11 +131,11 @@
       <p id="resultDesc"></p>
 
       <div id="combinedBlock" style="display:none;">
-        <p><strong>Ideas adicionales de tu tipo secundario:</strong></p>
+        <p><strong id="combinedTitle">Ideas adicionales de tu tipo secundario:</strong></p>
         <p id="combinedInsights"></p>
       </div>
 
-      <h3>Consejos prácticos para aprender con eficacia</h3>
+      <h3 id="tipsHeader">Consejos prácticos para aprender con eficacia</h3>
       <ul id="resultTips"></ul>
 
       <div id="secondaryBlock" style="display:none;">
@@ -127,27 +145,132 @@
 
       <hr style="margin: 2rem 0; border: none; border-top: 1px solid #444;">
       <div id="closingNote" style="margin-top: 2rem; font-size: 1rem; color: #ccc;">
-        <p><strong>¡Esto es solo el comienzo del proyecto SensoryVerse!</strong></p>
-        <p>¿Preguntas o sugerencias? Escríbenos a <a href="mailto:cosmovis1216@gmail.com" style="color: #00f2ff;">cosmovis1216@gmail.com</a>.</p>
-        <p>Sigue el avance en nuestro <a href="https://www.youtube.com/@SensoryVerse" target="_blank" style="color: #00f2ff;">canal de YouTube</a> o <a href="https://ko-fi.com/cosmoventures" target="_blank" style="color: #00f2ff;">apóyanos en Ko-fi</a>.</p>
+        <p id="closing1"><strong>¡Esto es solo el comienzo del proyecto SensoryVerse!</strong></p>
+        <p id="closing2">¿Preguntas o sugerencias? Escríbenos a <a href="mailto:cosmovis1216@gmail.com" style="color: #00f2ff;">cosmovis1216@gmail.com</a>.</p>
+        <p id="closing3">Sigue el avance en nuestro <a href="https://www.youtube.com/@SensoryVerse" target="_blank" style="color: #00f2ff;">canal de YouTube</a> o <a href="https://ko-fi.com/cosmoventures" target="_blank" style="color: #00f2ff;">apóyanos en Ko-fi</a>.</p>
       </div>
 
-      <button onclick="location.reload()">Volver a empezar</button>
+      <button id="restartBtn" onclick="location.reload()">Volver a empezar</button>
     </div>
   </div>
 
   <footer>
- <center><a href="index.html" target="_blank"><img src="urania_logo.png" alt="Logo Urania" width="50"></a><center>
-
+    <center><a href="index.html" target="_blank"><img src="urania_logo.png" alt="Logo Urania" width="50"></a><center>
     Creado por Urania – © 2025 Todos los derechos reservados.
   </footer>
 
-  <!-- Archivos JS externos -->
+  <!-- Archivos JS externos (no se tocan) -->
   <script defer src="types_tips.js"></script>
   <script defer src="NeuroSky_Profiles.js"></script>
   <script defer src="quiz.js"></script>
 
   <script>
+    /* =========================
+       Traducciones simples (ES/EN/FR)
+       ========================= */
+    const dict = {
+      es: {
+        docTitle: "Cuestionario de Personalidad SensoryVerse",
+        introTitle: "Bienvenido/a al Cuestionario de Personalidad de SensoryVerse",
+        introP:
+`El <strong>Cuestionario SensoryVerse</strong> es un recorrido de 8 preguntas que explora cómo procesas la información, centras la atención y te adaptas a los retos.
+Cada respuesta construye tu “constelación cognitiva” — un perfil que refleja tus preferencias naturales de aprendizaje.
+Al final, recibirás <strong>ideas personalizadas</strong> y <strong>consejos prácticos</strong> que puedes aplicar de inmediato para estudiar, trabajar o crear.`,
+        beginBtn: "Empezar",
+        exampleSummary: "¿Dudas? Pulsa para ver ejemplos",
+        nextBtn: "Siguiente",
+        tipsHeader: "Consejos prácticos para aprender con eficacia",
+        combinedTitle: "Ideas adicionales de tu tipo secundario:",
+        secondaryTitle: "Consejos adicionales",
+        closing1: "¡Esto es solo el comienzo del proyecto SensoryVerse!",
+        closing2: "¿Preguntas o sugerencias? Escríbenos a ",
+        closing3: "Sigue el avance en nuestro canal de YouTube o apóyanos en Ko-fi.",
+        restartBtn: "Volver a empezar"
+      },
+      en: {
+        docTitle: "SensoryVerse Personality Quiz",
+        introTitle: "Welcome to the SensoryVerse Personality Quiz",
+        introP:
+`The <strong>SensoryVerse Quiz</strong> is an 8-question journey that explores how you process information, focus attention and adapt to challenges.
+Each answer builds your “cognitive constellation” — a profile of your natural learning preferences.
+At the end you’ll get <strong>personalized insights</strong> and <strong>practical tips</strong> you can use right away to study, work or create.`,
+        beginBtn: "Start",
+        exampleSummary: "Not sure? Tap to see examples",
+        nextBtn: "Next",
+        tipsHeader: "Practical tips for effective learning",
+        combinedTitle: "Additional ideas from your secondary type:",
+        secondaryTitle: "Additional tips",
+        closing1: "This is just the beginning of the SensoryVerse project!",
+        closing2: "Questions or suggestions? Write to us at ",
+        closing3: "Follow our progress on YouTube or support us on Ko-fi.",
+        restartBtn: "Start over"
+      },
+      fr: {
+        docTitle: "Questionnaire de personnalité SensoryVerse",
+        introTitle: "Bienvenue au questionnaire de personnalité SensoryVerse",
+        introP:
+`Le <strong>Questionnaire SensoryVerse</strong> comprend 8 questions pour explorer votre façon de traiter l’information, de vous concentrer et de vous adapter.
+Chaque réponse construit votre « constellation cognitive » — un profil de vos préférences d’apprentissage.
+À la fin, vous recevrez des <strong>idées personnalisées</strong> et des <strong>conseils pratiques</strong> à appliquer tout de suite pour étudier, travailler ou créer.`,
+        beginBtn: "Commencer",
+        exampleSummary: "Un doute ? Cliquez pour voir des exemples",
+        nextBtn: "Suivant",
+        tipsHeader: "Conseils pratiques pour apprendre efficacement",
+        combinedTitle: "Idées supplémentaires de votre type secondaire :",
+        secondaryTitle: "Conseils additionnels",
+        closing1: "Ce n’est que le début du projet SensoryVerse !",
+        closing2: "Des questions ou des suggestions ? Écrivez-nous à ",
+        closing3: "Suivez l’avancement sur YouTube ou soutenez-nous sur Ko-fi.",
+        restartBtn: "Recommencer"
+      }
+    };
+
+    let currentLang = localStorage.getItem('sv_lang') || document.documentElement.lang || 'es';
+    function applyLang(lang){
+      const t = dict[lang] || dict.es;
+      document.documentElement.lang = lang;
+      document.title = t.docTitle;
+
+      // textos de intro
+      document.getElementById('introTitle').textContent = t.introTitle;
+      document.getElementById('introP').innerHTML = t.introP;
+      document.getElementById('beginBtn').textContent = t.beginBtn;
+
+      // quiz
+      document.getElementById('exampleSummary').textContent = t.exampleSummary;
+      document.getElementById('nextBtn').textContent = t.nextBtn;
+
+      // resultados estáticos
+      document.getElementById('tipsHeader').textContent = t.tipsHeader;
+      document.getElementById('combinedTitle').textContent = t.combinedTitle;
+      document.getElementById('closing1').innerHTML = `<strong>${t.closing1}</strong>`;
+      // Mantiene el mail y enlaces pero cambia la frase
+      document.getElementById('closing2').innerHTML = `${t.closing2}<a href="mailto:cosmovis1216@gmail.com" style="color:#00f2ff;">cosmovis1216@gmail.com</a>.`;
+      document.getElementById('closing3').innerHTML = `${t.closing3.replace('YouTube','<a href="https://www.youtube.com/@SensoryVerse" target="_blank" style="color:#00f2ff;">YouTube</a>').replace('Ko-fi','<a href="https://ko-fi.com/cosmoventures" target="_blank" style="color:#00f2ff;">Ko-fi</a>')}`;
+      document.getElementById('restartBtn').textContent = t.restartBtn;
+
+      // guarda y marca botón activo
+      localStorage.setItem('sv_lang', lang);
+      document.querySelectorAll('.lang-btn').forEach(b=>{
+        if (b.dataset.lang===lang) b.setAttribute('aria-current','page');
+        else b.removeAttribute('aria-current');
+      });
+    }
+
+    // expone para que finishQuiz lo use al poner "Consejos adicionales"
+    function i18n(key){ return (dict[currentLang]||dict.es)[key] || (dict.es[key]||key); }
+
+    // Botones del switcher
+    document.querySelectorAll('.lang-btn').forEach(btn=>{
+      btn.addEventListener('click', () => {
+        currentLang = btn.dataset.lang;
+        applyLang(currentLang);
+      });
+    });
+
+    applyLang(currentLang);
+
+    // ====== Tu lógica existente no se toca ======
     function finishQuiz() {
       document.getElementById("quiz").style.display = "none";
       document.getElementById("result").style.display = "block";
@@ -159,11 +282,9 @@
 
       const resultTitle = "🌟 " + primary["Type Name"];
       let codeLine = `<div style="font-size: 0.9rem; color: #aaa;">(${code})</div>`;
-
       if (secondary && secondaryCode !== code) {
         codeLine += `<div style="font-size: 0.9rem; color: #aaa;">Tipo relacionado: ${secondary["Type Name"]} (${secondaryCode})</div>`;
       }
-
       document.getElementById("resultTitle").innerHTML = resultTitle + codeLine;
 
       const combinedDesc = answers.map((c, i) => types_insight[c + (i + 1)]).join(" ");
@@ -188,7 +309,7 @@
       // Consejos extra si existe secundario
       if (secondary && secondaryCode !== code) {
         document.getElementById("secondaryBlock").style.display = "block";
-        document.getElementById("secondaryText").textContent = "Consejos adicionales";
+        document.getElementById("secondaryText").textContent = i18n('secondaryTitle');
 
         const secondaryUl = document.getElementById("secondaryTips");
         const primaryTips = answers.map((c, i) => practical_tips[c + (i + 1)]);
@@ -200,7 +321,7 @@
       }
     }
 
-    // Botón de inicio
+    // Botón de inicio (igual que antes)
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("beginBtn").addEventListener("click", () => {
         if (typeof startQuiz === 'function') startQuiz();
@@ -208,7 +329,5 @@
       });
     });
   </script>
-
-
 </body>
 </html>
